@@ -72,7 +72,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "store/configureStore.js", "reducers/index.tsx"  ],
   "exclude": [
     "node_modules"
   ]
