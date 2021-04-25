@@ -3,9 +3,10 @@ import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../components/common/Button';
 import { reduxApiTest, changeField } from '../src/reducers/test';
-import { queryApiTest } from '../src/query/test';
+//import { isLoading, error, data } from '../src/query/test';
 import Loading from '../components/common/Loading';
 import Pagination from '../components/common/Pagination';
+import axios from 'axios';
 
 const test = () => {
 
@@ -32,23 +33,33 @@ const test = () => {
         dispatch(reduxApiTest({id, name}));
     }
 
-    // const {data, status} = useQuery('reactQueryTest', queryApiTest({id, name}));
-        
+
+    const [queryloading, setQueryLoading] = useState(false);
+    const [queryError, setQueryError] = useState(null);
+    const [queryData, setQueryData] = useState(null);
+
+    // const reactQueryTest = () => {
+
+    //     const {isLoading, error, data} = useQuery('reactQueryTest', () => axios('http://swapi.dev/api/people/1/'));
+    //     setQueryLoading(isLoading);
+    //     setQueryError(error);
+    //     setQueryData(data);
+    // }
+
 
     return (
         <div>
             아이디 : <input name="id" onChange={onChange} value={id}/>
             이름 : <input name="name" onChange={onChange} value={name}/>
             <Button onClick = {apiTestFunc}>테스트</Button>
+            
             {loading && <Loading/>}
             <div>결과 : {testError ? "에러가 발생했습니다." :((result === '' || result == null) ? '' : (result == 'N' ? '틀렸습니다.' : '맞습니다.'))}</div>
             <Pagination totCnt={13} searchFunc={apiTestFunc} index={3}/>
-            {/* <br/>
-            <div>============================================</div>
-            <Button>ReactQuery테스트</Button>
-            {status === 'loading' && <div>loading.....</div>}
-            {status === 'error' && <div>error fetching....</div>}
-            {status === 'success' && <div>{data}</div>} */}
+            <br/>
+            {/* <div>============================================</div>
+            <Button onClick = {reactQueryTest}>reactQuery테스트</Button>
+            {queryloading ? (<div>로딩중.....</div>) : queryError ? (<div>에러가 발생했습니다.</div>) : (<div>{queryData}</div>)} */}
         </div>
     );
 };

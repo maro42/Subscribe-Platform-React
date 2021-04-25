@@ -6,9 +6,6 @@ const client = axios.create();
 // 1. API 기본 주소 설정
 client.defaults.baseURL = '/api';
 
-// 2. 헤더 설정(ex - jwt토큰)
-// const token = localStorage.getItem("jwtToken");
-// client.defaults.headers.common['X-AUTH-TOKEN'] = token;
 
 // 3. 인터셉터 설정
 axios.interceptors.response.use(
@@ -19,6 +16,20 @@ axios.interceptors.response.use(
     error => {
         // 요청 실패 시 특정 작업 수행
         return Promise.reject(error);
+    }
+);
+
+// jwt토큰 헤더 설정
+axios.interceptors.request.use(
+    (request) => {
+        const token = localStorage.getItem("jwtToken");
+        if(token){
+            client.defaults.headers.common['Authorization'] = token;
+        }
+        return request;
+    },
+    (error) => {
+        Promise.reject(error);
     }
 );
 
