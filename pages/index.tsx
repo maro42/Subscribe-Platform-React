@@ -21,6 +21,7 @@ export default function Home() {
   return (
       <div>
         <Link href="/test">테스트페이지 이동하기</Link>
+        <Link href="/auth">로그인 페이지 이동</Link>
         <Button onClick={goTest}>테스트페이지 이동하기222</Button>
       </div>
   );
