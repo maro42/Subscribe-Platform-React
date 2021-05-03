@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { HeaderBlock, GnbBlock, HeaderLogoBlock, MenuBlock } from '../../componentStyle/layout';
+import { baseURL } from '../../property';
 import Button from '../common/Button';
+import Link from "next/link";
 
 export default function Header(){
 
@@ -16,10 +18,10 @@ const openLoginForm = (e:Event) => {
     return (
         <HeaderBlock>
             <GnbBlock>
-                <HeaderLogoBlock>로고자리</HeaderLogoBlock>
+                <HeaderLogoBlock><img src="/images/logo.png" alt="로고" /></HeaderLogoBlock>
                 <MenuBlock>
                     <Button onClick={openLoginForm}>로그인</Button>
-                    <Button>회원가입</Button>
+                    <Link href="/registUserForm">회원가입</Link>
                 </MenuBlock>
             </GnbBlock>
         </HeaderBlock>

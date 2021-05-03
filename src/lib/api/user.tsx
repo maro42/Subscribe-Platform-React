@@ -5,5 +5,12 @@ type loginProps = {
     password : string;
 };
 
-// 로그인
-export const login = ({username, password}:loginProps) => client.post('/login.do',{username, password});
+// 회원가입 - 이메일 중복체크
+export const checkEmailDupl = (email:String) => client.get('/user/checkEmailDupl',{
+    params:{
+        "email" : email
+    }
+});
+
+// 회원가입
+export const signUp = (userInfo:Object) => client.post('/user/sign-up', userInfo);
