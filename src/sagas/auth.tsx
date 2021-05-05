@@ -3,8 +3,16 @@ import * as authAPI from '../lib/api/auth';
 import { takeLatest } from "@redux-saga/core/effects";
 
 const apiTestSaga = createRequestSaga("auth/LOGIN", authAPI.getLoginToken);
+const apiGetUserSaga = createRequestSaga("auth/GET_USER", authAPI.getUserId);
 
-export default function* loginSaga(){
+export  function* loginSaga(){
     yield takeLatest("auth/LOGIN", apiTestSaga);
-    // 여기에 관련된 거 있으면 추가
-}
+  
+};
+
+export  function* getUserSaga(){
+    yield takeLatest("auth/GET_USER", apiGetUserSaga);
+};
+
+
+export default {loginSaga, getUserSaga};
