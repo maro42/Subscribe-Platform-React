@@ -17,13 +17,16 @@ const registUserForm = () => {
             ...userInfo,
             email : "",
             password : "",
-            userName : "",
-            ownerName : "",
+            name : "",
+            // ownerName : "",
             storeName : "",
             businessNum1 : "",
             businessNum2 : "",
-            businessNum3 : ""
+            businessNum3 : "",
         });
+
+        // 판매자 여부
+        e.target.value === 'member' ? setUserInfo({...userInfo, store : false}) : setUserInfo({...userInfo, store : true});
 
         setRegistType(e.target.value);
     },[registType]);
@@ -32,15 +35,16 @@ const registUserForm = () => {
     const [userInfo, setUserInfo] = useState({
         email:"",
         password:"",
-        userName:"",
-        ownerName:"",
+        name:"",
+        // ownerName:"",
         storeName:"",
         businessNum1: "",
         businessNum2:"",
         businessNum3:"",
+        store : false   // 판매자여부
     });
     // 회원정보 변경 함수
-    const changeInfo = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const changeInfo = useCallback((e:React.ChangeEvent<HTMLInputElement>) => {
 
         // 사업자번호는 숫자만 가능
         if(e.target.name === "businessNum1" || e.target.name === "businessNum2" || e.target.name === "businessNum3") {
@@ -51,12 +55,12 @@ const registUserForm = () => {
             ...userInfo,
             [e.target.name] : e.target.value
         });
-    }
+    },[userInfo]);
 
-    // 이메일 중복확인 변수
+    // 이메일 중복체크 변수
     const [chkEmail, setChkEmail] = useState(false);
 
-    // 이메일 중복확인 함수
+    // 이메일 중복체크 함수
     const checkDuplEmail = (e:Event) => {
         e.preventDefault();
         if(userInfo.email.trim() == ""){
@@ -64,9 +68,11 @@ const registUserForm = () => {
             return false;
         }
 
-        // 이메일 중복체크 서버 갔다오기
+        // 이메일 중복체크
         checkEmailDupl(userInfo.email)
             .then(response => {
+
+                console.log(response.data);
                 if(response.data.result === null){
                     setChkEmail(true);
                     alert("사용가능한 이메일입니다.");
@@ -91,10 +97,12 @@ const registUserForm = () => {
         // 1. 이메일 중복체크여부
         if(!chkEmail){
             alert("이메일 중복체크를 해주세요.");
+
             return false;
         }
 
         // 회원가입
+        
         signUp(userInfo)
         .then(res => {
             
@@ -130,17 +138,16 @@ const registUserForm = () => {
             {/* 일반회원 판매자 공통 */}
             <TextField label="이메일" name="email" onChange={changeInfo} value={userInfo.email}/><Button onClick={checkDuplEmail}>중복확인</Button><br/>
             <TextField type="password" label="비밀번호" name="password" onChange={changeInfo} value={userInfo.password}/><br/>
-            {registType === "member" ? (    // 일반 회원 회원가입
-                <div><TextField label="이름" name="userName" onChange={changeInfo} value={userInfo.userName}/></div>
-            ):( // 판매자 회원가입
+            <div><TextField label="이름" name="name" onChange={changeInfo} value={userInfo.name}/></div>
+            {registType === "store" ? (    // 판매자 추가정보
                 <div>
-                    <TextField label="사업자명" name="ownerName" onChange={changeInfo} value={userInfo.ownerName}/><br/>
+                    {/* <TextField label="사업자명" name="ownerName" onChange={changeInfo} value={userInfo.ownerName}/><br/> */}
                     <TextField label="상호명" name="storeName" onChange={changeInfo} value={userInfo.storeName}/>
                     <div>
                     <TextField label="사업자번호" name="businessNum1" onChange={changeInfo} value={userInfo.businessNum1}/> - <TextField label="사업자번호" name="businessNum2" onChange={changeInfo} value={userInfo.businessNum2}/> - <TextField label="사업자번호" name="businessNum3" onChange={changeInfo} value={userInfo.businessNum3}/>
                     </div>
                 </div>
-            )}
+            ):null}
             <br/>
             <Button onClick={registUser}>가입하기</Button>
             <Button onClick={() => Router.back()}>취소</Button>
