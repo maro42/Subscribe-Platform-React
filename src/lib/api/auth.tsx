@@ -11,6 +11,5 @@ export const getLoginToken = ({email, password}:login) => client.post('/auth/log
 );
 
 export const getUserId = ({id}:any) =>{
-    console.log(id)
-    client.get('/api/user/'+id)
+    client.get('/user/'+id)
 }

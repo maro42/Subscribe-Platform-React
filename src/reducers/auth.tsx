@@ -28,7 +28,6 @@ const loginReducer = createReducer(initialState,{
         state.token = test;
         
         localStorage.setItem('Authorization', state.token);
-
     },
     [TEST_FAILURE] : (state, {payload : error}) =>{
         state.testError = error;
