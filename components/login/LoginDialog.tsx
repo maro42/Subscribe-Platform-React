@@ -1,8 +1,8 @@
-import { DialogContent, DialogTitle } from '@material-ui/core';
-import { useState } from 'react';
+import { DialogContent, DialogTitle, Link } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import {Button, Dialog} from '../common'
 import * as API from '../../src/reducers/auth';
+import useInputState from '../customHook/useInputState';
 
 type LoginDialogType = {
     open : boolean;
@@ -14,41 +14,34 @@ open,
 setOpen
 }:LoginDialogType){
   
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, handleEmailChange] = useInputState('');
+    const [password, handlePasswordChange] = useInputState('');
 
-    const onChangeEmail = (e:any) => {
-        const {value, name} = e.target;
-        setEmail(value);
-      };
-  
-      const onCHangePassword = (e:any) => {
-          const {value, name} = e.target;
-          setPassword(value);
-        };
-  
-        const handleClose = (e:any) =>{
-            setOpen(false);
-        }
+    const handleClose = (e:any) =>{
+         setOpen(false);
+     }
 
-        const dispatch = useDispatch();
-        const onClickLogin = () => {
-            dispatch(API.reduxApiTest({
-                email : email,
-                password : password}));
-        }
+    const dispatch = useDispatch();
+    const onClickLogin = () => {
+        dispatch(API.reduxLogin({
+            email : email,
+            password : password}));
+    }   
+
 
     return(
-        <Dialog open = {open} onClose={handleClose} >
-            <DialogTitle >
-                로그인
-            </DialogTitle>
-            <DialogContent>
-                <input name="eamil" onChange={onChangeEmail} value={email}/>
-                <input name="password" onChange={onCHangePassword} value={password}/>
+        <Dialog open = {open} onClose={handleClose} title ={"로그인"} >           
+              <div style={{display:'flex'}}>
+                  <div style={{display:'grid', margin:'5px'}}>
+                    <input name="eamil" onChange={handleEmailChange} value={email} style={{marginBottom: "3px"}} placeholder={'이메일'}/>
+                    <input name="password" onChange={handlePasswordChange} value={password}  style={{marginTop: "3px"}}  placeholder={'비밀번호'}/>
+                  </div>
                 <Button onClick ={onClickLogin} >로그인</Button>
-            </DialogContent>
-               
+            </div>
+            <div style={{display: 'flex',justifyContent: 'space-around'}}>
+                <Link>아이디 찾기</Link>
+                <Link>비밀번호 찾기</Link>    
+            </div>    
         </Dialog>
     )
 
