@@ -30,7 +30,7 @@ const openLoginForm = (e:Event) => {
                 <HeaderLogoBlock><Link href="/"><img src="/images/logo.png" alt="로고" /></Link></HeaderLogoBlock>
                 <MenuBlock>
                     <Button onClick={handleClickDialogOpen}>로그인</Button>
-                    <Link href="/registUserForm">회원가입</Link>
+                    <Link href="/registUserForm">회원가입</Link>&nbsp;
                     <Link href="/store">판매자페이지</Link>
                     <LoginDialog open={open} setOpen={setOpen}/>
                 </MenuBlock>
