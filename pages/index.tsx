@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from 'react-query-devtools';
 import Link from "next/link";
 import Button from '../components/common/Button';
 import Router from "next/router";
+import Layout from '../components/layout/Layout';
 
 const client = new QueryClient();
 
@@ -19,10 +20,10 @@ export default function Home() {
   }
 
   return (
-      <div>
+      <Layout>
         <Link href="/test">테스트페이지 이동하기</Link>
         <Button onClick={goTest}>테스트페이지 이동하기222</Button>
-      </div>
+      </Layout>
   );
 }
 

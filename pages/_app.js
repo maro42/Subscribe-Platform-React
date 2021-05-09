@@ -12,9 +12,7 @@ const SubscribePlatform = ({ Component, pageProps }) => {
       {/* 파비콘은 나중에 넣자 */}
       {/* <link rel="icon" type="image/png" href="/images/favicon.ico"/> */}
     </Helmet>
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <Component {...pageProps} />
   </HelmetProvider>
   )
 }

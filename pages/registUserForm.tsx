@@ -3,7 +3,9 @@ import Router from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import Button from '../components/common/Button';
+import Layout from '../components/layout/Layout';
 import { checkEmailDupl, signUp } from '../src/lib/api/user';
+import { emptyCheck } from '../src/lib/validationCheck';
 
 const registUserForm = () => {
 
@@ -41,7 +43,8 @@ const registUserForm = () => {
         businessNum1: "",
         businessNum2:"",
         businessNum3:"",
-        store : false   // 판매자여부
+        store : false,   // 판매자여부
+        businessNum : ""
     });
     // 회원정보 변경 함수
     const changeInfo = useCallback((e:React.ChangeEvent<HTMLInputElement>) => {
@@ -49,13 +52,18 @@ const registUserForm = () => {
         // 사업자번호는 숫자만 가능
         if(e.target.name === "businessNum1" || e.target.name === "businessNum2" || e.target.name === "businessNum3") {
             e.target.value = e.target.value.replace(/[^0-9]/g, '');
-        } ;
+        };
         
         setUserInfo({
             ...userInfo,
             [e.target.name] : e.target.value
-        });
+        });        
     },[userInfo]);
+
+    // 서버에 보낼 사업자번호 생성
+    useEffect(() => {
+        setUserInfo({...userInfo, businessNum : userInfo.businessNum1+""+userInfo.businessNum2+""+userInfo.businessNum3});
+    },[userInfo.businessNum1, userInfo.businessNum2, userInfo.businessNum3]);
 
     // 이메일 중복체크 변수
     const [chkEmail, setChkEmail] = useState(false);
@@ -63,16 +71,17 @@ const registUserForm = () => {
     // 이메일 중복체크 함수
     const checkDuplEmail = (e:Event) => {
         e.preventDefault();
-        if(userInfo.email.trim() == ""){
+
+        if(!emptyCheck(userInfo.email)){
             alert("이메일을 입력해주세요.");
             return false;
         }
 
+        // 이메일 유효성체크
+
         // 이메일 중복체크
         checkEmailDupl(userInfo.email)
             .then(response => {
-
-                console.log(response.data);
                 if(response.data.result === null){
                     setChkEmail(true);
                     alert("사용가능한 이메일입니다.");
@@ -93,19 +102,49 @@ const registUserForm = () => {
 
     // 회원가입 함수
     const registUser = () => {
+
         // 유효성 체크
-        // 1. 이메일 중복체크여부
+        // 1. 빈 값 체크
+        if(!emptyCheck(userInfo.email)){
+            alert("이메일을 입력해주세요.");
+            return false;
+        }
+        if(!emptyCheck(userInfo.name)){
+            alert("이름을 입력해주세요.");
+            return false;
+        }
+        if(!emptyCheck(userInfo.password)){
+            alert("비밀번호를 입력해주세요.");
+            return false;
+        }
+
+        // 사업자일 때 체크할 부분
+        if(userInfo.store){
+            if(!emptyCheck(userInfo.storeName)){
+                alert("상호명을 입력해주세요.");
+                return false;
+            }
+            if(!emptyCheck(userInfo.businessNum)){
+                alert("사업자번호를 입력해주세요.");
+                return false;
+            }
+
+            // 사업자번호 유효성 체크
+        }
+
+        // 2. 이메일 중복체크여부
         if(!chkEmail){
             alert("이메일 중복체크를 해주세요.");
-
             return false;
         }
 
         // 회원가입
-        
         signUp(userInfo)
         .then(res => {
-            
+            alert("가입되었습니다.");
+            Router.push({
+                pathname: "/",
+              });
         })
         .catch(e => {
             alert("오류가 발생했습니다. 다시 시도해주세요."); 
@@ -114,7 +153,7 @@ const registUserForm = () => {
     }
 
     return (
-        <div>
+        <Layout>
             <div>
             <label>일반회원</label>
             <Radio
@@ -151,7 +190,7 @@ const registUserForm = () => {
             <br/>
             <Button onClick={registUser}>가입하기</Button>
             <Button onClick={() => Router.back()}>취소</Button>
-        </div>
+        </Layout>
     );
 };
 
