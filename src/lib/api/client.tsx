@@ -22,7 +22,8 @@ axios.interceptors.response.use(
 // jwt토큰 헤더 설정
 axios.interceptors.request.use(
     (request) => {
-        const token = localStorage.getItem("jwtToken");
+        const token = localStorage.getItem("Authorization");
+        console.log("token>>",token)
         if(token){
             client.defaults.headers.common['Authorization'] = token;
         }
