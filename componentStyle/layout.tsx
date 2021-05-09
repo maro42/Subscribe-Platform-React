@@ -36,7 +36,7 @@ export const GnbBlock = styled.div`
 
 export const HeaderLogoBlock = styled.div`
 img {
-  width: 180px;
+  width: 50px;
   float: left;
 }
 `;
