@@ -8,7 +8,7 @@ client.defaults.baseURL = '/api';
 
 
 // 3. 인터셉터 설정
-axios.interceptors.response.use(
+client.interceptors.response.use(
     response =>{
         // 요청 성공 시 특정 작업 수행
         return response;
@@ -20,14 +20,14 @@ axios.interceptors.response.use(
 );
 
 // jwt토큰 헤더 설정
-axios.interceptors.request.use(
-    (request) => {
+client.interceptors.request.use(
+    (config) => {
         const token = localStorage.getItem("Authorization");
-        console.log("token>>",token)
+        // console.log("token>>",token);
         if(token){
-            client.defaults.headers.common['Authorization'] = token;
+            config.headers.Authorization = token;
         }
-        return request;
+        return config;
     },
     (error) => {
         Promise.reject(error);
