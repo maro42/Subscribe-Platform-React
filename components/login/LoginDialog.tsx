@@ -28,6 +28,10 @@ setOpen
             password : password}));
     }   
 
+    const onClickTest = () => {
+        dispatch(API.reduxGetUserId(1));
+    }   
+
 
     return(
         <Dialog open = {open} onClose={handleClose} title ={"로그인"} >           
@@ -39,7 +43,7 @@ setOpen
                 <Button onClick ={onClickLogin} >로그인</Button>
             </div>
             <div style={{display: 'flex',justifyContent: 'space-around'}}>
-                <Link>아이디 찾기</Link>
+                <Button onClick={onClickTest}>아이디 찾기</Button>
                 <Link>비밀번호 찾기</Link>    
             </div>    
         </Dialog>
