@@ -1,7 +1,23 @@
 import React from 'react'
 import { ProductMainContainer } from './Title';
 
-function Detail(){
+type DetailProps = {
+    deliveryOption? : string;
+setDeliveryOption? : any;
+
+etc? : string;
+setEtc? : any;
+
+}
+
+function Detail({
+    deliveryOption,
+setDeliveryOption,
+
+etc,
+setEtc,
+
+} : DetailProps){
     return(
         <ProductMainContainer>
             <h1>상세 정보를 등록해주세요 </h1>

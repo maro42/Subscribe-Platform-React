@@ -2,7 +2,14 @@ import React from 'react'
 import { ImageBox, ImageContainer } from './Thumbnail';
 import { ProductMainContainer } from './Title';
 
-function ServiceImage(){
+type ServiceImageProps = {
+    services? : any;
+setServices? : any;
+
+}
+
+function ServiceImage({services,
+    setServices,}:ServiceImageProps){
     return(
         <ProductMainContainer>
         <h1>상세 정보 이미지를 업로드해주세요 </h1>

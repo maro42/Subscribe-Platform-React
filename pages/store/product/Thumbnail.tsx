@@ -2,7 +2,13 @@ import React from 'react'
 import styled from 'styled-components';
 import { ProductMainContainer } from './Title';
 
-function Thumbnail(){
+type ThumbnailProps = {
+    thumbNails? : any;
+setTuhmbNails? : any;
+}
+
+function Thumbnail({thumbNails,
+    setTuhmbNails,}: ThumbnailProps){
     return(
         <ProductMainContainer>
         <h1>외부에 노출할 이미지 (썸네일)을 등록해주세요 </h1>

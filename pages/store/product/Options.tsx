@@ -3,7 +3,30 @@ import { Button } from '../../../components/common';
 import { ProductMainContainer } from './Title';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import OptionDialog from './OptionDialog';
-function Options(){
+
+type OptionsProps = {
+    cycle? : string;
+    setCycle? : any;
+    deliveryDate? : string;
+    setDeliveryDate? : any;
+    options? : any;
+    setOptions? : any;
+    maxCount? : number;
+    maxConut? : any;
+    
+
+}
+
+function Options({
+    cycle,
+    setCycle,
+    deliveryDate,
+    setDeliveryDate,
+    options,
+    setOptions,
+    maxCount,
+    maxConut,
+}:OptionsProps){
 
     const [open, setOpen] = useState(false);
 
