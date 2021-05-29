@@ -44,6 +44,7 @@ setOpen
             </div>
             <div style={{display: 'flex',justifyContent: 'space-around'}}>
                 <Button onClick={onClickTest}>아이디 찾기</Button>
+
                 <Link>비밀번호 찾기</Link>    
             </div>    
         </Dialog>

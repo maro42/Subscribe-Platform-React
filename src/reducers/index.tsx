@@ -2,7 +2,8 @@ import { HYDRATE } from "next-redux-wrapper";
 import { combineReducers } from "redux";
 import loading from './loading';
 import test from './test';
-import loginReducer from './auth'
+import loginReducer from './auth';
+import storeMypageReducer from './store/mypage';
 
 const rootReducer = (state:any, action:any) => {
     switch(action.type){
@@ -12,7 +13,8 @@ const rootReducer = (state:any, action:any) => {
             const combineReducer = combineReducers({
                 loading,
                 test,
-                loginReducer
+                loginReducer,
+                storeMypageReducer,
             });
             return combineReducer(state, action);
         }

@@ -6,10 +6,10 @@ const index = () => {
 
     const goMypage = () => {
         Router.push({
-            pathname: "/store/storeInfo/mypage",
-            query : {
-              email : encodeURIComponent("이메일"),
-            }
+            pathname: "/store/mypage",
+            // query : {
+            //   email : encodeURIComponent("이메일"),
+            // }
           });
     }
 

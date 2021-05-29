@@ -23,9 +23,11 @@ client.interceptors.response.use(
 client.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("Authorization");
-     
+
+        // console.log("token>>",token);
         if(token){
-            client.defaults.headers.common['hello'] = token;
+            config.headers.Authorization = token;
+
         }
         return config;
     },

@@ -8,6 +8,5 @@ export const getLoginToken = ({email, password}:login) => client.post('/auth/log
     }
 );
 
-export const getUserId = ({id}:any) =>{
-    client.get('/user/'+id)
-}
+export const getUserId = ({id}:any) =>
+    client.get('/user/'+id);
