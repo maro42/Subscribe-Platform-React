@@ -1,6 +1,7 @@
 import { createReducer, createSlice } from "@reduxjs/toolkit";
 import { createAction, handleActions } from "redux-actions";
 import createRequestSaga, {createRequestActionTypes} from '../lib/createRequestSaga';
+import { changeProps } from "../lib/props/common";
 import { testProps } from "../lib/props/test";
 
 const CHANGE_FIELD = 'test/CHANGE_FIELD';
@@ -10,10 +11,6 @@ const [TEST, TEST_SUCCESS, TEST_FAILURE] = createRequestActionTypes('test/TEST')
 
 // =====================================================
 
-type changeProps = {
-    key : string,
-    value : string
-}
 export const changeField = createAction(
     CHANGE_FIELD,
     ({key, value}:changeProps) => ({
