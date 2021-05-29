@@ -43,8 +43,8 @@ setOpen
                 <Button onClick ={onClickLogin} >로그인</Button>
             </div>
             <div style={{display: 'flex',justifyContent: 'space-around'}}>
-                {/* <Link>아이디 찾기</Link> */}
-                <Button onClick={onClickTest}>아이디찾기</Button>
+                <Button onClick={onClickTest}>아이디 찾기</Button>
+
                 <Link>비밀번호 찾기</Link>    
             </div>    
         </Dialog>
