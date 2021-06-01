@@ -1,8 +1,22 @@
-import React, { useState } from 'react'
-import { Button } from '../../../components/common';
+import React, { useCallback, useMemo, useState } from 'react'
+import { Button, CustomToggleButton } from '../../../components/common';
 import { ProductMainContainer } from './Title';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import OptionDialog from './OptionDialog';
+
+const ButtonGroups = [
+
+    {
+        children : <p>주단위</p>,
+        value : 'week',
+    },
+    {
+        children : <p>월단위</p>,
+        value : 'month',
+    }
+
+]
+
 
 type OptionsProps = {
     cycle? : string;
@@ -30,17 +44,31 @@ function Options({
 
     const [open, setOpen] = useState(false);
 
+    const handleAlignment = useCallback((event: React.MouseEvent<HTMLElement>, value: string ) => {
+        setCycle(value);
+      },[setCycle]);
+
+      const test = useMemo(()=>{
+        if(cycle === 'week'){
+            return (
+                <p>week </p>
+            )
+        }else{
+            return (<p>MONTH </p>)
+        }
+      },[cycle])
+
     return(
         <ProductMainContainer>
             <h1>상품 배송 주기를 선택해 주세요</h1>
             <div>
-            <Button>월 단위</Button>
-            <Button>주 단위</Button>
+                <CustomToggleButton  value={cycle} values = {ButtonGroups} onChange={handleAlignment}/>
             </div>
 
             <h1>배송 가능 날짜를 선택해 주세요</h1>
-            <div>월화수목금토일 체크박스로 선택하면 그것만 선택할 수 있도록..?</div>
-            <div>아님 매월 1일, 15일 이런식.. 할 수있또록.. </div>
+            {/* <div>월화수목금토일 체크박스로 선택하면 그것만 선택할 수 있도록..?</div>
+            <div>아님 매월 1일, 15일 이런식.. 할 수있또록.. </div> */}
+            {test}
             <h1>상품 옵션을 등록해 주세요</h1>
             가격도 같이 등록 상품 옵션 + 가격 다이얼로그
             <Button onClick={()=>setOpen(true)}><AddCircleIcon fontSize='large' /></Button>
