@@ -26,23 +26,25 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
-
-
 type StepperType = {
-
-  steps : string[];
+  steps: string[];
   activeStep: number;
-  setActiveStep:React.Dispatch<React.SetStateAction<number>>;
-  content :(step: number) => JSX.Element;
-  handleNextButton : () => void;
-handleBackButton : () => void;
-handleFinushButton : () => void;
-}
+  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
+  content: (step: number) => JSX.Element;
+  handleNextButton: () => void;
+  handleBackButton: () => void;
+  handleFinushButton: () => void;
+};
 
-export default function HorizontalLinearStepper({steps,activeStep,setActiveStep,content,  handleNextButton,
+export default function HorizontalLinearStepper({
+  steps,
+  activeStep,
+  setActiveStep,
+  content,
+  handleNextButton,
   handleBackButton,
-  handleFinushButton }: StepperType) {
+  handleFinushButton,
+}: StepperType) {
   const classes = useStyles();
   // const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
@@ -55,7 +57,6 @@ export default function HorizontalLinearStepper({steps,activeStep,setActiveStep,
     return skipped.has(step);
   };
 
-
   const handleReset = () => {
     setActiveStep(0);
   };
@@ -67,7 +68,9 @@ export default function HorizontalLinearStepper({steps,activeStep,setActiveStep,
           const stepProps: { completed?: boolean } = {};
           const labelProps: { optional?: React.ReactNode } = {};
           if (isStepOptional(index)) {
-            labelProps.optional = <Typography variant="caption">Optional</Typography>;
+            labelProps.optional = (
+              <Typography variant="caption">Optional</Typography>
+            );
           }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
@@ -82,20 +85,23 @@ export default function HorizontalLinearStepper({steps,activeStep,setActiveStep,
       <div>
         {activeStep === steps.length ? (
           <div>
-              All steps completed - you&apos;re finished
-           
+            All steps completed - you&apos;re finished
             <Button onClick={handleReset} className={classes.button}>
               Reset
             </Button>
           </div>
         ) : (
           <div>
-           {content}
+            {content}
             <div>
-              <Button disabled={activeStep === 0} onClick={handleBackButton} className={classes.button}>
+              <Button
+                disabled={activeStep === 0}
+                onClick={handleBackButton}
+                className={classes.button}
+              >
                 Back
               </Button>
-  
+
               <Button
                 variant="contained"
                 color="primary"

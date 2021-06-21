@@ -25,9 +25,12 @@ export default function CustomTable(
 ) {
 
 
-    const TableHeaders = useMemo(()=>{
-        return(
-                <TableRow>
+
+  return (
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+              { <TableRow>
                     {
                    headers.map((v,index)=>{
                        return (
@@ -35,44 +38,27 @@ export default function CustomTable(
                        )
                    })
                }
-                </TableRow>
-        )
-
-    },[headers]);
-
-    const TableBodies = useMemo(()=>{
-
-        return (
-            content.map((v, index)=>{
-
-                return(
-                    <TableRow key={index}>
-                        
-                        {
-                           headers.map((h, i)=>{
-                               //TODO : align 추가 
-                               return(
-                                   <TableCell key={i}>{v[h.property]}</TableCell>
-                               )
-                           })
-                        }
-
-                    </TableRow>
-                )
-             
-            })
-        )
-
-    },[]);
-
-  return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-              {TableHeaders}
+                </TableRow>}
         </TableHead>
         <TableBody>
-            {TableBodies}
+            { content.map((v, index)=>{
+
+return(
+    <TableRow key={index}>
+        
+        {
+           headers.map((h, i)=>{
+               //TODO : align 추가 
+               return(
+                   <TableCell key={i}>{v[h.property]}</TableCell>
+               )
+           })
+        }
+
+    </TableRow>
+)
+
+})}
         </TableBody>     
     </Table>
     </TableContainer>

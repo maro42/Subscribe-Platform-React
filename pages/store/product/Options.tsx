@@ -1,84 +1,164 @@
-import React, { useCallback, useMemo, useState } from 'react'
-import { Button, CustomToggleButton } from '../../../components/common';
+import React, { useCallback, useMemo, useState } from 'react';
+import {
+  Button,
+  CustomTable,
+  CustomToggleButton,
+  SelectBox,
+} from '../../../components/common';
 import { ProductMainContainer } from './Title';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import OptionDialog from './OptionDialog';
+import useInputState from '../../../components/customHook/useInputState';
+import OptaionTable from './OptaionTable';
+import { TableHeader } from '../../../src/lib/props';
 
 const ButtonGroups = [
+  {
+    children: <p>주단위</p>,
+    value: 'week',
+  },
+  {
+    children: <p>월단위</p>,
+    value: 'month',
+  },
+];
 
-    {
-        children : <p>주단위</p>,
-        value : 'week',
-    },
-    {
-        children : <p>월단위</p>,
-        value : 'month',
-    }
-
-]
-
+const OptaionTableHeader: TableHeader[] = [
+  {
+    label: '옵션 이름',
+    property: 'optionTitle',
+  },
+  {
+    label: '가격',
+    property: 'price',
+  },
+  {
+    label: '재고',
+    property: 'stock',
+  },
+  {
+    label: '최대 주문 가능 수량',
+    property: 'maxCount',
+  },
+];
 
 type OptionsProps = {
-    cycle? : string;
-    setCycle? : any;
-    deliveryDate? : string;
-    setDeliveryDate? : any;
-    options? : any;
-    setOptions? : any;
-    maxCount? : number;
-    maxConut? : any;
-    
-
-}
+  cycle?: string;
+  setCycle?: any;
+  deliveryDate?: string;
+  setDeliveryDate?: any;
+  options?: any;
+  setOptions?: any;
+  maxCount?: number;
+  maxConut?: any;
+  monthValue?: any;
+  weekValue?: any;
+};
 
 function Options({
-    cycle,
-    setCycle,
-    deliveryDate,
-    setDeliveryDate,
-    options,
-    setOptions,
-    maxCount,
-    maxConut,
-}:OptionsProps){
+  cycle,
+  setCycle,
+  deliveryDate,
+  setDeliveryDate,
+  options,
+  setOptions,
+  maxConut,
+  monthValue,
+  weekValue,
+}: OptionsProps) {
+  const [open, setOpen] = useState(false);
 
-    const [open, setOpen] = useState(false);
+  // const [options, setOptions] = useState<{[key:string] : string}[]>([]);
 
-    const handleAlignment = useCallback((event: React.MouseEvent<HTMLElement>, value: string ) => {
-        setCycle(value);
-      },[setCycle]);
+  const [optionTitle, handleOptionTitle, setOptionTitle] = useInputState('');
+  const [price, handlePrice, setPrice] = useInputState('');
+  const [stock, handleStock, setStock] = useInputState('');
+  const [maxCount, handleMaxCount, setMaxCount] = useInputState('');
 
-      const test = useMemo(()=>{
-        if(cycle === 'week'){
-            return (
-                <p>week </p>
-            )
-        }else{
-            return (<p>MONTH </p>)
-        }
-      },[cycle])
+  const heendleAddOptions = useCallback(() => {
+    //    options.push({
+    //     optionTitle : optionTitle,
+    //     price : price,
+    //     stock : stock,
+    //     maxCount : maxCount
+    //    })
 
-    return(
-        <ProductMainContainer>
-            <h1>상품 배송 주기를 선택해 주세요</h1>
-            <div>
-                <CustomToggleButton  value={cycle} values = {ButtonGroups} onChange={handleAlignment}/>
-            </div>
+    setOptions([
+      ...options,
+      {
+        optionTitle: optionTitle,
+        price: price,
+        stock: stock,
+        maxCount: maxCount,
+      },
+    ]);
+  }, [options, setOptions, optionTitle, price, stock, maxCount]);
 
-            <h1>배송 가능 날짜를 선택해 주세요</h1>
-            {/* <div>월화수목금토일 체크박스로 선택하면 그것만 선택할 수 있도록..?</div>
-            <div>아님 매월 1일, 15일 이런식.. 할 수있또록.. </div> */}
-            {test}
-            <h1>상품 옵션을 등록해 주세요</h1>
-            가격도 같이 등록 상품 옵션 + 가격 다이얼로그
-            <Button onClick={()=>setOpen(true)}><AddCircleIcon fontSize='large' /></Button>
+  const handleAlignment = useCallback(
+    (event: React.MouseEvent<HTMLElement>, value: string) => {
+      setCycle(value);
+    },
+    [setCycle],
+  );
 
-            <h1>최대 주문 가능 수량을 입력해 주세요</h1>
-            <input name='orderCount'/>
-            <OptionDialog open={open} setOpen={setOpen}/>        
-        </ProductMainContainer>
+  const handleSubCategorySelect = useCallback(
+    (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+      setDeliveryDate(event.target.value);
+    },
+    [setDeliveryDate],
+  );
 
-    )
+  return (
+    <ProductMainContainer>
+      <h1>상품 배송 주기를 선택해 주세요</h1>
+      <div>
+        <CustomToggleButton
+          value={cycle}
+          values={ButtonGroups}
+          onChange={handleAlignment}
+        />
+      </div>
+
+      <h1>배송 가능 날짜를 선택해 주세요</h1>
+
+      {cycle === 'week' ? (
+        <SelectBox
+          values={weekValue!.content}
+          value={deliveryDate}
+          onChange={handleSubCategorySelect}
+          placeHolder={'주 선택'}
+          displayEmpty
+        />
+      ) : cycle === 'month' ? (
+        <SelectBox
+          values={monthValue!.content}
+          value={deliveryDate}
+          onChange={handleSubCategorySelect}
+          placeHolder={'월 선택'}
+          displayEmpty
+        />
+      ) : null}
+      <h1>상품 옵션을 등록해 주세요</h1>
+
+      <div style={{ display: 'flex' }}>
+        상품명{' '}
+        <input
+          title="상품명"
+          onChange={handleOptionTitle}
+          value={optionTitle}
+        />
+        가격 <input title="가격" onChange={handlePrice} value={price} />
+        재고 <input title="재고" onChange={handleStock} value={stock} />
+        최대 주문가능 수량{' '}
+        <input
+          title="최대주문가능수량"
+          onChange={handleMaxCount}
+          value={maxCount}
+        />
+        <Button onClick={heendleAddOptions}>추가</Button>
+      </div>
+
+      {<CustomTable headers={OptaionTableHeader} content={options} />}
+    </ProductMainContainer>
+  );
 }
 
 export default Options;
