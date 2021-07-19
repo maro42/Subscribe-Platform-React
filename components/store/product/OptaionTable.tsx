@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { Button, Dialog, CustomTable } from '../../../components/common';
-import useInputState from '../../../components/customHook/useInputState';
+import { Button, Dialog, CustomTable } from '../../common';
+import useInputState from '../../customHook/useInputState';
 import { TableHeader } from '../../../src/lib/props';
 import { ProductMainContainer } from './Title';
 

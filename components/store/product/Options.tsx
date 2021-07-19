@@ -4,9 +4,9 @@ import {
   CustomTable,
   CustomToggleButton,
   SelectBox,
-} from '../../../components/common';
+} from '../../common';
 import { ProductMainContainer } from './Title';
-import useInputState from '../../../components/customHook/useInputState';
+import useInputState from '../../customHook/useInputState';
 import OptaionTable from './OptaionTable';
 import { TableHeader } from '../../../src/lib/props';
 

@@ -2,7 +2,7 @@ import { FormControl, FormHelperText, InputLabel } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { SelectBox } from '../../../components/common';
+import { SelectBox } from '../../common';
 
 type FormSelectBoxProps = {
   values: { value: string; label: string }[];

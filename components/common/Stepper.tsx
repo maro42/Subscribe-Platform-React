@@ -5,11 +5,11 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Title from '../../pages/store/product/Title';
-import Options from '../../pages/store/product/Options';
-import Thumbnail from '../../pages/store/product/Thumbnail';
-import ServiceImage from '../../pages/store/product/ServiceImage';
-import Detail from '../../pages/store/product/Detail';
+import Title from '../store/product/Title';
+import Options from '../store/product/Options';
+import Thumbnail from '../store/product/Thumbnail';
+import ServiceImage from '../store/product/ServiceImage';
+import Detail from '../store/product/Detail';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

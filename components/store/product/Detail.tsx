@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ProductMainContainer } from './Title';
 import dynamic from 'next/dynamic';
-import CustomEditor from '../../../components/common/CustomEditor';
+import CustomEditor from '../../common/CustomEditor';
 
 type DetailProps = {
   deliveryOption?: string;

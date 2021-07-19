@@ -1,4 +1,4 @@
-import { Button, Stepper } from '../../../components/common';
+import { Button, Stepper } from '../../common';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import Title from './Title';
