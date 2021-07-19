@@ -6,6 +6,8 @@ import Options from './Options';
 import Thumbnail from './Thumbnail';
 import ServiceImage from './ServiceImage';
 import Detail from './Detail';
+import { useDispatch } from 'react-redux';
+import * as API from '../../../src/reducers/store/mypage';
 
 const weekValue = {
   content: [
@@ -223,6 +225,34 @@ function Product() {
     setActiveStep(0);
   };
 
+  const dispatch = useDispatch();
+
+  const handleFinish = () => {
+    const serviceOptions = options.map((option) => {
+      return option;
+    });
+
+    const serviceImages = thumbNails.map((thumbNail, index) => {
+      return thumbNail;
+    });
+
+    dispatch(
+      API.saveProduct({
+        serviceName: title,
+        category: category,
+        subCategory: subCategory,
+        serviceCycle: cycle,
+        availableDay: deliveryDate,
+        maxCount: String(maxCount),
+        serviceOptions: serviceOptions,
+        serviceImages: serviceImages,
+        // serviceImages: service,
+        deliveryOption: deliveryOption,
+        etc: etc,
+      }),
+    );
+  };
+
   return (
     <ProductContainer>
       <Stepper
@@ -232,7 +262,7 @@ function Product() {
         content={getStepContent(activeStep)}
         handleNextButton={handleNext}
         handleBackButton={handleBack}
-        handleFinushButton={handleNext}
+        handleFinushButton={handleFinish}
       />
     </ProductContainer>
   );

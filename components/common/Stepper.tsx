@@ -86,8 +86,8 @@ export default function HorizontalLinearStepper({
         {activeStep === steps.length ? (
           <div>
             All steps completed - you&apos;re finished
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
+            <Button onClick={handleFinushButton} className={classes.button}>
+              Save
             </Button>
           </div>
         ) : (

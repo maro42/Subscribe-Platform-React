@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 type ImageUploadProps = {
-  image?: string[];
+  image?: any[];
   setImage?: any;
 };
 
