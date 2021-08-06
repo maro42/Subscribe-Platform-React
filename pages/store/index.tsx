@@ -14,7 +14,7 @@ const index = () => {
 
   const goUpdateProduct = () => {
     Router.push({
-      pathname: '/store/product',
+      pathname: '/store/products',
       query: {
         email: encodeURIComponent('이메일'),
       },
@@ -24,7 +24,7 @@ const index = () => {
   return (
     <div>
       판매자 메인페이지입니다.<Button onClick={goMypage}>내정보</Button>
-      <Button onClick={goUpdateProduct}>상품 등록</Button>
+      <Button onClick={goUpdateProduct}>내 상품</Button>
     </div>
   );
 };
