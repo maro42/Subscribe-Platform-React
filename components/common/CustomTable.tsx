@@ -10,14 +10,6 @@ function createData(name: string, calories: number, fat: number, carbs: number, 
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
 //TODO : 페이지네이션 추가
 
 type CustomTableProps = {
@@ -33,9 +25,12 @@ export default function CustomTable(
 ) {
 
 
-    const TableHeaders = useMemo(()=>{
-        return(
-                <TableRow>
+
+  return (
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+              { <TableRow>
                     {
                    headers.map((v,index)=>{
                        return (
@@ -43,44 +38,27 @@ export default function CustomTable(
                        )
                    })
                }
-                </TableRow>
-        )
-
-    },[headers]);
-
-    const TableBodies = useMemo(()=>{
-
-        return (
-            content.map((v, index)=>{
-
-                return(
-                    <TableRow key={index}>
-                        
-                        {
-                           headers.map((h, i)=>{
-                               //TODO : align 추가 
-                               return(
-                                   <TableCell key={i}>{v[h.property]}</TableCell>
-                               )
-                           })
-                        }
-
-                    </TableRow>
-                )
-             
-            })
-        )
-
-    },[]);
-
-  return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-              {TableHeaders}
+                </TableRow>}
         </TableHead>
         <TableBody>
-            {TableBodies}
+            { content.map((v, index)=>{
+
+return(
+    <TableRow key={index}>
+        
+        {
+           headers.map((h, i)=>{
+               //TODO : align 추가 
+               return(
+                   <TableCell key={i}>{v[h.property]}</TableCell>
+               )
+           })
+        }
+
+    </TableRow>
+)
+
+})}
         </TableBody>     
     </Table>
     </TableContainer>
