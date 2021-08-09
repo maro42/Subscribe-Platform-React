@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.background.paper,
     },
     imageList: {
-      width: 500,
-      height: 450,
+      width: 400,
+      height: 350,
     },
     icon: {
       color: 'rgba(255, 255, 255, 0.54)',
@@ -26,16 +26,16 @@ type CustomImageListItemType = {
   src: string;
   title: string;
   subTitle: string;
-  rowHeight?: number;
-  width?: number;
+  // rowHeight?: number;
+  // width?: number;
 };
 
 export default function CustomImageListItem({
   src,
   title,
   subTitle,
-  rowHeight,
-  width,
+  // rowHeight,
+  // width,
 }: CustomImageListItemType) {
   const classes = useStyles();
 
