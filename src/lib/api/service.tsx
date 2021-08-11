@@ -9,7 +9,7 @@ export const getServicesByServiceName = (searchServiceListParam: SearchByService
     },
 }).then((response) => response.data)
 
-export const getServicesByCategory = (param: SearchByCategoryId) => client.get('/service/getServiceListByCategory/' + param.categoryId, {
+export const getServicesByCategoryId = (param: SearchByCategoryId) => client.get('/service/getServiceListByCategory/' + param.categoryId, {
     params: {
         'pageNum': param.pageNum,
         'size': param.size

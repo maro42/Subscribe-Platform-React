@@ -30,7 +30,7 @@ function CategorySelect() {
             pathname: "/search/servicelist",
             query: {
                 searchType: encodeURIComponent('category'),
-                category: encodeURIComponent(e.target.value as string)
+                categoryId: encodeURIComponent(e.target.value as string)
             }
         })
     }
