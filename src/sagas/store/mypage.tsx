@@ -1,6 +1,8 @@
 import { takeLatest } from '@redux-saga/core/effects';
 import * as storeMypageAPI from '../../lib/api/store/mypage';
-import createRequestSaga from '../../lib/createRequestSaga';
+import createRequestSaga, {
+  createRequestActionTypes,
+} from '../../lib/createRequestSaga';
 
 const getStoreinfoSaga = createRequestSaga(
   'store/mypage/GET_STOREINFO',
@@ -12,6 +14,11 @@ const saveProduct = createRequestSaga(
   storeMypageAPI.saveProduct,
 );
 
+const getServiceList = createRequestSaga(
+  'store/service/GET_SERVICE_LIST_REQUEST',
+  storeMypageAPI.getServiceList,
+);
+
 export function* storeMypageSaga() {
   yield takeLatest('store/mypage/GET_STOREINFO', getStoreinfoSaga);
 }
@@ -20,4 +27,8 @@ export function* savePRoductSaga() {
   yield takeLatest('product/service/SAVE_PRODUCT_REQUEST', saveProduct);
 }
 
-export default { savePRoductSaga, storeMypageSaga };
+export function* getServiceListSage() {
+  yield takeLatest('store/service/GET_SERVICE_LIST_REQUEST', getServiceList);
+}
+
+export default { savePRoductSaga, storeMypageSaga, getServiceListSage };

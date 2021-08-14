@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Products from '../../components/store/products';
 import Router from 'next/router';
 import Button from '../../components/common/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { getServices } from '../../src/reducers/store/mypage';
 
 const products = () => {
+  const { serviceList } = useSelector(({ storeMypageReducer }) => ({
+    serviceList: storeMypageReducer.service,
+  }));
+
+  console.log(serviceList);
+
   const goUpdateProduct = () => {
     Router.push({
       pathname: '/store/product',
@@ -13,6 +21,16 @@ const products = () => {
       },
     });
   };
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(
+      getServices({
+        pageNum: 0,
+        size: 10,
+      }),
+    );
+  });
 
   return (
     <div>

@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import { createAction } from "redux-actions";
 import { createRequestActionTypes } from "../../lib/createRequestSaga";
 import { changeProps } from "../../lib/props/common";
-import { Product } from "../../lib/props/store";
+import { Product, Service } from "../../lib/props/store";
 
 // 액션 정의
 const [GET_STOREINFO, GET_STOREINFO_SUCCESS, GET_STOREINFO_FAILURE] = createRequestActionTypes('store/mypage/GET_STOREINFO');
@@ -18,6 +18,8 @@ export const changeForm = createAction(CHANGE_FORM, ({key, value}:changeProps) =
 const [SAVE_PRODUCT_REQUEST, SVAE_PRODUCT_SUCCESS, SAVE_PRODUCT_FAILURE] = createRequestActionTypes('product/service/SAVE_PRODUCT_REQUEST');
 export const saveProduct = createAction(SAVE_PRODUCT_REQUEST, (formData: Product) => ({formData}));
 
+const [GET_SERVICE_LIST_REQUEST, GET_SERVICE_LIST_SUCCESS, GET_SERVICE_LIST_FAILURE] = createRequestActionTypes('store/service/GET_SERVICE_LIST_REQUEST');
+export const getServices = createAction(GET_SERVICE_LIST_REQUEST);
 
 
 // 초기 값
@@ -31,7 +33,13 @@ const initialState = {
             businessNum : ""
         }
     },
-    error : ""
+    error: "" ,
+    
+    service: {
+        serviceId: -1,
+        serviceName: '',
+        thumbnailImage :''
+    }
 };
 
 const storeMypageReducer = createReducer(initialState,{
@@ -55,7 +63,13 @@ const storeMypageReducer = createReducer(initialState,{
     },
     [SAVE_PRODUCT_FAILURE] :(state, {payload:error})=>{
     state.error = error;
-    }
+    },
+    [GET_SERVICE_LIST_SUCCESS]: (state, { payload }) => {
+        state.service = payload.value;
+    },
+     [GET_SERVICE_LIST_FAILURE] :(state, {payload:error})=>{
+        state.error = error;
+    },
 
 });
 

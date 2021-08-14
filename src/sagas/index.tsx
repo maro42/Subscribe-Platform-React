@@ -11,5 +11,6 @@ export default function* rootSaga() {
     authSaga.getUserSaga(),
     storeMypageSaga.storeMypageSaga(),
     storeMypageSaga.savePRoductSaga(),
+    storeMypageSaga.getServiceListSage(),
   ]);
 }

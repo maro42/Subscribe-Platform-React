@@ -14,3 +14,9 @@ export type Product = {
   deliveryOption?: string;
   etc?: string;
 };
+
+export type Service = {
+  serviceId: number;
+  serviceName: string;
+  thumbnailImage: string;
+};
