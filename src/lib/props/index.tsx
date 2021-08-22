@@ -11,7 +11,8 @@ export type TableResponse<T> = {
 
 export type ListResponse<T> = {
   content: T[];
-  totalCount: number;
+  contentSize: number;
+  totCnt: number;
 };
 
 export type SelectBoxResponse = {

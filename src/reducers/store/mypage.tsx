@@ -1,6 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { createAction } from "redux-actions";
 import { createRequestActionTypes } from "../../lib/createRequestSaga";
+import { ListResponse, PagebleRequest } from "../../lib/props";
 import { changeProps } from "../../lib/props/common";
 import { Product, Service } from "../../lib/props/store";
 
@@ -19,11 +20,18 @@ const [SAVE_PRODUCT_REQUEST, SVAE_PRODUCT_SUCCESS, SAVE_PRODUCT_FAILURE] = creat
 export const saveProduct = createAction(SAVE_PRODUCT_REQUEST, (formData: Product) => ({formData}));
 
 const [GET_SERVICE_LIST_REQUEST, GET_SERVICE_LIST_SUCCESS, GET_SERVICE_LIST_FAILURE] = createRequestActionTypes('store/service/GET_SERVICE_LIST_REQUEST');
-export const getServices = createAction(GET_SERVICE_LIST_REQUEST);
+export const getServices = createAction(GET_SERVICE_LIST_REQUEST, (pageable: PagebleRequest) => ({pageable}));
 
+
+type initialStateType = {
+    modifyYn?: any;
+    storeinfo?: any;
+    error?: string;
+    service?: ListResponse<Service>;
+}
 
 // 초기 값
-const initialState = {
+const initialState:initialStateType = {
     modifyYn : "N",
     storeinfo : {
         email : "",
@@ -36,9 +44,9 @@ const initialState = {
     error: "" ,
     
     service: {
-        serviceId: -1,
-        serviceName: '',
-        thumbnailImage :''
+        content: [],
+        contentSize: 0,
+        totCnt: 0
     }
 };
 
@@ -65,7 +73,7 @@ const storeMypageReducer = createReducer(initialState,{
     state.error = error;
     },
     [GET_SERVICE_LIST_SUCCESS]: (state, { payload }) => {
-        state.service = payload.value;
+        state.service = payload.value!;
     },
      [GET_SERVICE_LIST_FAILURE] :(state, {payload:error})=>{
         state.error = error;
