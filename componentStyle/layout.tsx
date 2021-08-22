@@ -23,7 +23,7 @@ export const ContainerBlock = styled.div`
 export const HeaderBlock = styled.div`
 whdth: 100%;
 height : 50px;
-background : #FFFF66;
+background : black;
 `;
 
 export const GnbBlock = styled.div`
@@ -43,12 +43,7 @@ img {
 
 export const MenuBlock = styled.div`
 width: auto;
-  float: right;
-  button {
-    width: auto;
-    float: left;
-    margin-bottom : 10px;
-  }
+float: right;
 `;
 
 // ===== 푸터관련 =====
@@ -56,7 +51,7 @@ width: auto;
 export const FooterBlock = styled.div`
   width: 100%;
   height: 100px;
-  background: #FFFF66;
+  background: black;
   bottom: 0;
 `;
 
