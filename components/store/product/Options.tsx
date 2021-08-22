@@ -24,7 +24,7 @@ const ButtonGroups = [
 const OptaionTableHeader: TableHeader[] = [
   {
     label: '옵션 이름',
-    property: 'optionTitle',
+    property: 'optionName',
   },
   {
     label: '가격',
@@ -68,7 +68,7 @@ function Options({
 
   // const [options, setOptions] = useState<{[key:string] : string}[]>([]);
 
-  const [optionTitle, handleOptionTitle, setOptionTitle] = useInputState('');
+  const [optionName, handleOptionName, setOptionName] = useInputState('');
   const [price, handlePrice, setPrice] = useInputState('');
   const [stock, handleStock, setStock] = useInputState('');
   const [maxCount, handleMaxCount, setMaxCount] = useInputState('');
@@ -84,13 +84,13 @@ function Options({
     setOptions([
       ...options,
       {
-        optionTitle: optionTitle,
+        optionName: optionName,
         price: price,
         stock: stock,
         maxCount: maxCount,
       },
     ]);
-  }, [options, setOptions, optionTitle, price, stock, maxCount]);
+  }, [options, setOptions, optionName, price, stock, maxCount]);
 
   const handleAlignment = useCallback(
     (event: React.MouseEvent<HTMLElement>, value: string) => {
@@ -142,8 +142,8 @@ function Options({
         상품명{' '}
         <input
           title="상품명"
-          onChange={handleOptionTitle}
-          value={optionTitle}
+          onChange={handleOptionName}
+          value={optionName}
         />
         가격 <input title="가격" onChange={handlePrice} value={price} />
         재고 <input title="재고" onChange={handleStock} value={stock} />

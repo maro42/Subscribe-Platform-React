@@ -16,7 +16,7 @@ export const changeForm = createAction(CHANGE_FORM, ({key, value}:changeProps) =
 
 
 const [SAVE_PRODUCT_REQUEST, SVAE_PRODUCT_SUCCESS, SAVE_PRODUCT_FAILURE] = createRequestActionTypes('product/service/SAVE_PRODUCT_REQUEST');
-export const saveProduct = createAction(SAVE_PRODUCT_REQUEST, (formData: Product) => ({formData}));
+export const saveProduct = createAction(SAVE_PRODUCT_REQUEST, (formData: FormData) => (formData));
 
 
 

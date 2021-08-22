@@ -227,6 +227,7 @@ function Product() {
 
   const dispatch = useDispatch();
 
+  // 등록하기 버튼
   const handleFinish = () => {
     const serviceOptions = options.map((option) => {
       return option;
@@ -236,20 +237,25 @@ function Product() {
       return thumbNail;
     });
 
+    const formData = new FormData();
+    formData.append("serviceName", title);
+    formData.append("serviceCycle", cycle);
+    formData.append("availableDay", deliveryDate);
+    formData.append("detailContents", etc);
+    formData.append("serviceOptions", serviceOptions);
+    // formData.append("serviceImages", serviceImages);
+    const categories = [];
+    categories.push({'categoryId' : category})
+    formData.append("categories",categories);
+    // formData.append("subCategory", subCategory);
+    
+    
+    // formData.append("maxCount", String(maxCount));
+    // formData.append("deliveryOption", deliveryOption);
+
+
     dispatch(
-      API.saveProduct({
-        serviceName: title,
-        category: category,
-        subCategory: subCategory,
-        serviceCycle: cycle,
-        availableDay: deliveryDate,
-        maxCount: String(maxCount),
-        serviceOptions: serviceOptions,
-        serviceImages: serviceImages,
-        // serviceImages: service,
-        deliveryOption: deliveryOption,
-        etc: etc,
-      }),
+      API.saveProduct(formData),
     );
   };
 
