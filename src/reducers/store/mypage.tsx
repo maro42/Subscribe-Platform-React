@@ -17,7 +17,7 @@ export const changeForm = createAction(CHANGE_FORM, ({key, value}:changeProps) =
 
 
 const [SAVE_PRODUCT_REQUEST, SVAE_PRODUCT_SUCCESS, SAVE_PRODUCT_FAILURE] = createRequestActionTypes('product/service/SAVE_PRODUCT_REQUEST');
-export const saveProduct = createAction(SAVE_PRODUCT_REQUEST, (formData: Product) => ({formData}));
+export const saveProduct = createAction(SAVE_PRODUCT_REQUEST, (formData: FormData) => (formData));
 
 const [GET_SERVICE_LIST_REQUEST, GET_SERVICE_LIST_SUCCESS, GET_SERVICE_LIST_FAILURE] = createRequestActionTypes('store/service/GET_SERVICE_LIST_REQUEST');
 export const getServices = createAction(GET_SERVICE_LIST_REQUEST, (pageable: PagebleRequest) => ({pageable}));
