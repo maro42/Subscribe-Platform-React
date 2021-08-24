@@ -1,30 +1,10 @@
+import React, { useEffect } from 'react';
 import ImageList from '@material-ui/core/ImageList';
-import React from 'react';
 import CustomImageListItem from '../../common/CustomImageListItem';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-
-const tempData = [
-  {
-    id: 1,
-    title: 'test',
-    thumbnail: '/images/cancel.png',
-  },
-  {
-    id: 2,
-    title: 'test',
-    thumbnail: '/images/cancel.png',
-  },
-  {
-    id: 3,
-    title: 'test',
-    thumbnail: '/images/cancel.png',
-  },
-  {
-    id: 4,
-    title: 'test',
-    thumbnail: '/images/cancel.png',
-  },
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { getServices } from '../../../src/reducers/store/mypage';
+import { Service } from '../../../src/lib/props/store';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,16 +26,32 @@ function Products() {
   //이미지 리덕스로 가져와서 네네..
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(
+      getServices({
+        pageNum: 0,
+        size: 10,
+      }),
+    );
+  }, [dispatch]);
+
+  const { service } = useSelector(({ storeMypageReducer }) => ({
+    service: storeMypageReducer.service,
+  }));
+
+  console.log(service);
+
   return (
     <div className={classes.root}>
       <ImageList>
-        {tempData.map((data, index) => {
+        {service.content?.map((data: Service, index: number) => {
           return (
             <CustomImageListItem
-              key={data.id}
-              title={data.title}
-              src={data.thumbnail}
-              subTitle={`${data.title}${data.id}`}
+              key={index}
+              title={data.serviceName}
+              src={data.thumbnailImage}
+              subTitle={`${data.serviceName}${data.serviceId}`}
             />
           );
         })}
