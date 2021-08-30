@@ -10,3 +10,5 @@ export const getLoginToken = ({ email, password }: login) => client.post('/auth/
 
 export const getUserId = ({ id }: any) =>
     client.get('/user/' + id);
+
+export const confirmLogin = () => client.get('/auth/confirm-login');

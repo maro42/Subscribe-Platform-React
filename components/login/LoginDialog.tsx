@@ -29,7 +29,7 @@ export default function LoginDialog({
 
     const dispatch = useDispatch();
     const onClickLogin = () => {
-        const res = dispatch(API.reduxLogin({
+        dispatch(API.reduxLogin({
             email: email,
             password: password
         }));

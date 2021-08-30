@@ -5,10 +5,17 @@ import Link from 'next/link';
 import LoginDialog from '../login/LoginDialog'
 import { Button } from '@material-ui/core';
 import Router from "next/router";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { confirmLogin } from '../../src/reducers/auth';
 
 
 export default function Header() {
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(confirmLogin());
+    }, [])
 
     const [popupOpen, setPopupOpen] = useState(false);
     const [popupTitle, setPopupTitle] = useState("");
@@ -46,7 +53,7 @@ export default function Header() {
     // 로그아웃 처리 함수
     const logout = () => {
         localStorage.removeItem('Authorization');
-        const currPath = window.location.pathname+window.location.search;
+        const currPath = window.location.pathname + window.location.search;
         alert("로그아웃되었습니다.");
         window.location.replace(currPath);
     }

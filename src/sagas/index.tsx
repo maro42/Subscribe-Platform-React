@@ -9,6 +9,7 @@ export default function* rootSaga() {
     testSaga(),
     authSaga.loginSaga(),
     authSaga.getUserSaga(),
+    authSaga.confirmLoginSaga(),
     storeMypageSaga.storeMypageSaga(),
     storeMypageSaga.savePRoductSaga(),
     storeMypageSaga.getServiceListSage(),
