@@ -8,7 +8,7 @@ export const Wrap = styled.div`
 `;
 
 export const ContainerBlock = styled.div`
-  width: 1260px;
+  width: 100%;
   height: auto;
   margin: 0 auto;
   &:after {

@@ -32,8 +32,10 @@ function servicelist({ params }: any) {
     }
 
     // useQuery(queryKey, queryFunction, options)
-    const { data, isError, isLoading } = useQuery(['getServicesByServiceName', { 'serviceName': params.serviceName }], 
-    () => params.serchType === 'category' ? searchByCategoryId({ 'categoryId': params.categoryId, 'pageNum': 0, 'size': 10 }) : searchByServiceName({ 'serviceName': params.serviceName, 'pageNum': 0, 'size': 10 }),
+    const { data, isError, isLoading } = useQuery(['getServicesByServiceName', { 'serviceName': params.serviceName }],
+        () => params.serchType === 'category' ?
+            searchByCategoryId({ 'categoryId': params.categoryId, 'pageNum': 0, 'size': 10 })
+            : searchByServiceName({ 'serviceName': params.serviceName, 'pageNum': 0, 'size': 10 }),
         {
             refetchOnWindowFocus: false,
             retry: 4,  // 디폴트 : 3번
@@ -46,8 +48,9 @@ function servicelist({ params }: any) {
 
     return (
         <Layout>
-            {isLoading ? (<Loading />) : (<ServiceList resultData={data} />)}
-            {isError && <div>오류가 발생했습니다.</div>}
+            {isLoading ? (<Loading />) : 
+            (isError ? <div>오류가 발생했습니다.</div> :  (<ServiceList resultData={data} />))
+            }
         </Layout>
     );
 }

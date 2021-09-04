@@ -33,7 +33,7 @@ function SearchByTitleForm(){
 
     return(
         <div style={{ width: '40%', float: 'right' }}>
-        <Input style={{ width: '90%' }} placeholder="검색어를 입력해주세요." inputProps={{ 'aria-label': 'description' }} value={title} onChange={changeTitle}/>
+        <Input style={{ width: '80%' }} placeholder="검색어를 입력해주세요." inputProps={{ 'aria-label': 'description' }} value={title} onChange={changeTitle}/>
         <IconButton type="button" className={classes.iconButton} aria-label="search" onClick={searchByTitle}>
           <SearchIcon />
         </IconButton>

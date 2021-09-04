@@ -50,6 +50,12 @@ export default function Header() {
         });
     }
 
+    const goMypage = () => {
+        Router.push({
+            pathname: "/mypage"
+        })
+    }
+
     // 로그아웃 처리 함수
     const logout = () => {
         localStorage.removeItem('Authorization');
@@ -67,6 +73,7 @@ export default function Header() {
                         <>
                             <Button variant="outlined" style={{ color: "white", borderColor: "white", marginRight: "5px", marginTop: "2%" }} onClick={logout}>로그아웃</Button>
                             {auth.includes('STORE') && (<Button variant="outlined" style={{ color: "white", borderColor: "white", marginTop: "2%" }} onClick={goStore}>판매자페이지</Button>)}
+                            {auth.includes('USER') && (<Button variant="outlined" style={{ color: "white", borderColor: "white", marginTop: "2%" }} onClick={goMypage}>마이페이지</Button>)}
                         </>
                     ) : (
                         <>

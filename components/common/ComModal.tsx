@@ -29,7 +29,7 @@ createStyles({
 }),
 );
 
-function ComModal(open:any, closeFunc:any, contents:any){
+function ComModal({open, closeFunc, contents}:any){
 
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
@@ -41,7 +41,9 @@ function ComModal(open:any, closeFunc:any, contents:any){
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
+        <div style={modalStyle} className={classes.paper}>
         {contents}
+        </div>
       </Modal>
     );
 };

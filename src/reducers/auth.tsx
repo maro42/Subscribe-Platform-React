@@ -57,12 +57,15 @@ const loginReducer = createReducer(initialState,{
             state.loginYn = 'Y';
             state.auth = res.auths;
             state.authError = '';
+        }else{
+            localStorage.removeItem('Authorization');
         }
     },
     [CONFIRM_LOGIN_FAILURE] : (state, {payload : error}) =>{
         state.authError = error;
         state.loginYn = 'N';
         state.auth = null;
+        localStorage.removeItem('Authorization');
     },
 
 });

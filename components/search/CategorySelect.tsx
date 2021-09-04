@@ -51,7 +51,7 @@ function CategorySelect() {
                     onChange={handleChange}
                 >
                     <MenuItem value='0'><em>카테고리</em></MenuItem>
-                    {data.content.map((item:{categoryId : string, categoryName : string}) => (<MenuItem value={item.categoryId}>{item.categoryName}</MenuItem>))}
+                    {data && data.content.map((item:{categoryId : string, categoryName : string}) => (<MenuItem value={item.categoryId}>{item.categoryName}</MenuItem>))}
                 </Select>
             </FormControl>}
         </>
