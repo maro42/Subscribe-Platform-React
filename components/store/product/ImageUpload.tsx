@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 type ImageUploadProps = {
-  image?: any[];
-  setImage?: any;
+  image: string[];
+  setImage: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 function ImageUpload({ image, setImage }: ImageUploadProps) {
@@ -20,8 +20,8 @@ function ImageUpload({ image, setImage }: ImageUploadProps) {
 
       let reader = new FileReader();
       reader.onload = () => {
-        fileURLs[i] = reader.result;
-        setImage([...fileURLs]);
+        fileURLs[i] = reader.result?.toString();
+        setImage([...image!, fileURLs[i]]);
       };
       reader.readAsDataURL(file);
     }

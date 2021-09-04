@@ -5,6 +5,8 @@ import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { getServices } from '../../../src/reducers/store/mypage';
 import { Service } from '../../../src/lib/props/store';
+import { Button } from '../../common';
+import router from 'next/router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,8 +44,15 @@ function Products() {
 
   console.log(service);
 
+  const test = () => {
+    router.push({
+      pathname: '/service',
+    });
+  };
+
   return (
     <div className={classes.root}>
+      <Button onClick={test}>go DetailService Sample</Button>
       <ImageList>
         {service.content?.map((data: Service, index: number) => {
           return (
