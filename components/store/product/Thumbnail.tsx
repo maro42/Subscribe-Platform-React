@@ -5,36 +5,16 @@ import { ProductMainContainer } from './Title';
 
 type ThumbnailProps = {
   thumbNails?: string[];
-  setTuhmbNails?: any;
+  setTuhmbNails?: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 function Thumbnail({ thumbNails, setTuhmbNails }: ThumbnailProps) {
-  const handleImageUpload = (e: any) => {
-    const fileArr = e.target.files;
-
-    let fileURLs: any[] = [];
-
-    let file;
-    let filesLength = fileArr.length > 5 ? 5 : fileArr.length;
-
-    for (let i = 0; i < filesLength; i++) {
-      file = fileArr[i];
-
-      let reader = new FileReader();
-      reader.onload = () => {
-        fileURLs[i] = reader.result;
-        setTuhmbNails([...fileURLs]);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   return (
     <ProductMainContainer>
       <h1>외부에 노출할 이미지 (썸네일)을 등록해주세요 </h1>
       최대 5장까지 첨부 가능합니다
       {/* <input type='file' name = 'files'/> */}
-      <ImageUpload image={thumbNails} setImage={setTuhmbNails} />
+      <ImageUpload image={thumbNails!} setImage={setTuhmbNails!} />
     </ProductMainContainer>
   );
 }

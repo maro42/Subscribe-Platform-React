@@ -114,7 +114,14 @@ function Product() {
   );
   const [cycle, setCycle] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState<
+    {
+      optionName: string;
+      price: string;
+      stock: string;
+      maxCount: string;
+    }[]
+  >([]);
   const [maxCount, maxConut] = useState(0);
   const [thumbNails, setTuhmbNails] = useState<string[]>([]);
   const [services, setServices] = useState([]);
@@ -233,30 +240,38 @@ function Product() {
       return option;
     });
 
-    const serviceImages = thumbNails.map((thumbNail, index) => {
-      return thumbNail;
+    const formData = new FormData();
+    formData.append('serviceName', title);
+    formData.append('serviceCycle', cycle);
+    formData.append('availableDay', deliveryDate);
+    formData.append('detailContents', etc);
+    // formData.append('serviceOptions[0].title', serviceOptions);
+
+    serviceOptions.forEach((v, index) => {
+      formData.append(`serviceOptions[${index}].optionName`, v.optionName);
+      formData.append(`serviceOptions[${index}].stock`, v.stock);
+      formData.append(`serviceOptions[${index}].price`, v.price);
+      formData.append(`serviceOptions[${index}].maxCount`, v.maxCount);
     });
 
-    const formData = new FormData();
-    formData.append("serviceName", title);
-    formData.append("serviceCycle", cycle);
-    formData.append("availableDay", deliveryDate);
-    formData.append("detailContents", etc);
-    formData.append("serviceOptions", serviceOptions);
+    formData.append('categories[0].categoryId', category);
+
+    thumbNails.forEach((v, index) => {
+      formData.append(`serviceImages[${index}].imageFile`, v);
+      formData.append(`serviceImages[${index}].imageType`, 'THUMBNAIL');
+      formData.append(`serviceImages[${index}].imageSeq`, String(index));
+    });
+
     // formData.append("serviceImages", serviceImages);
-    const categories = [];
-    categories.push({'categoryId' : category})
-    formData.append("categories",categories);
+    // const categories = [];
+    // categories.push({ categoryId: category });
+
     // formData.append("subCategory", subCategory);
-    
-    
+
     // formData.append("maxCount", String(maxCount));
     // formData.append("deliveryOption", deliveryOption);
 
-
-    dispatch(
-      API.saveProduct(formData),
-    );
+    dispatch(API.saveProduct(formData));
   };
 
   return (

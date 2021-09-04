@@ -5,10 +5,10 @@ import client from '../client';
 export const getStoreinfo = () => client.get('/user/store/getStoreinfo');
 
 export const updateStoreinfo = (storeinfo: storeinfo) =>
-  client.put('/user/store/updateStoreinfo', storeinfo);
+  client.patch('/store/service', storeinfo);
 
 export const getServiceList = (pageble: PagebleRequest) => {
-  client.get(`/service/store/getServiceList`, {
+  client.get(`/store/services`, {
     params: {
       pageNum: pageble.pageNum,
       size: pageble.size,
@@ -17,4 +17,8 @@ export const getServiceList = (pageble: PagebleRequest) => {
 };
 
 export const saveProduct = (data: FormData) =>
-  client.post('/service/store/addService', data);
+  client.post('/store/service', data, {
+    headers: {
+      'Content-Type': `multipart/form-data; `,
+    },
+  });

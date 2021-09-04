@@ -4,7 +4,7 @@ import Select from '@material-ui/core/Select';
 
 type CustomSelectBoxProps = {
   values: {
-    value: string;
+    value: string | number;
     label: string;
   }[];
   defaultValue?: string;
