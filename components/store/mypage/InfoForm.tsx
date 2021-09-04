@@ -29,7 +29,7 @@ function InfoForm() {
 
   // 리덕스에서 가져온 storeinfo
   const { storeinfo, error, storeinfoLoading } = useSelector(
-    ({ storeMypageReducer, loading }) => ({
+    ({ storeMypageReducer, loading }:any) => ({
       storeinfo: storeMypageReducer.storeinfo,
       error: storeMypageReducer.error,
       storeinfoLoading: loading['store/mypage/GET_STOREINFO'],
