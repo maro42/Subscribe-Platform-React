@@ -3,10 +3,12 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { Loading } from "../components/common";
+import Error from "../components/common/Error";
 import Layout from "../components/layout/Layout";
 import TabBar from "../components/mypage/TabBar";
 import { getMyInfo } from "../src/lib/api/mypage";
 
+// todo : 로그인 만료 처리
 function mypage() {
 
     const { loginYn } = useSelector(({ loginReducer }: any) => ({
@@ -26,7 +28,7 @@ function mypage() {
     return (
         <Layout>{isLoading && <Loading/>}
         <h2>마이페이지</h2>
-        {isError || data === null || data === undefined ? <div>오류가 발생했습니다</div> : <TabBar data={data}/>}
+        {isError || data === null || data === undefined ? <Error/> : <TabBar data={data}/>}
         </Layout>
     );
 }

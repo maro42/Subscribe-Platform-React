@@ -1,45 +1,72 @@
 import { Button } from "@material-ui/core";
 import React from "react";
 import { useState } from "react";
+import { useQuery } from "react-query";
+import { subscribes } from "../../src/lib/api/mypage";
+import { mySubscribeListItem } from "../../src/lib/props/subscribe";
+import { Loading } from "../common";
 import ComModal from "../common/ComModal";
+import EmptyResult from "../common/EmptyResult";
 import CancelSubscribePopup from "./CancelSubscribePopup";
 
+// todo : 디폴트 이미지 처리
 function Subscribe() {
 
+    // 구독 취소 팝업
     const [cancelPopup, setCancelPopup] = useState(false);
 
-    const cancelPopupFunc = () => {
+    // 구독 취소 아이디
+    const [cancelSubsId, setCancelSubsId] = useState(0);
+
+    const cancelPopupFunc = (subscribeId:number) => {
+        setCancelSubsId(subscribeId);
         setCancelPopup(!cancelPopup);
     }
 
+    // 구독정보 불러오기
+    const { data, isError, isLoading } = useQuery('subscribes', subscribes, {
+        refetchOnWindowFocus: false,
+    });
+
     return (
         <div>
-        <table style={{width:'80%'}}>
-            <colgroup>
-                <col width='40%' />
-                <col width='50%' />
-                <col width='10%' />
-            </colgroup>
-            <tbody>
-                <tr>
-                    <td><img style={{ width: '300px', height: '180px' }} src='/images/cancel.png' /></td>
-                    <td>
-                        <div>민주네 견과류</div>
-                        <div>
-                            <p><span>60</span>일째 구독 중</p>
-                            <p>
-                                선택옵션 / 가격 : <span>캐슈넛</span> / <span>3000</span>원 <br/>
-                                <span>호두</span> / <span>2000</span>원
-                            </p>
-                            <p>결제 횟수 : <span>3</span>회</p>
-                            <p>다음 결제예정일 : <span>2021.01.10</span></p>
-                        </div>
-                    </td>
-                    <td><Button variant="outlined" onClick={cancelPopupFunc}>구독취소</Button></td>
-                </tr>
-            </tbody>
-        </table>
-        <ComModal open={cancelPopup} closeFunc={cancelPopupFunc} contents={<CancelSubscribePopup closeFunc={cancelPopupFunc}/>}/>
+            {isLoading && <Loading />}
+            {isError && <div>오류가 발생했습니다.</div>}
+            {data !== undefined && data && data.totCnt !== 0 ? (
+                <table>
+                    <colgroup>
+                        <col width='40%' />
+                        <col width='50%' />
+                        <col width='10%' />
+                    </colgroup>
+                    <tbody>
+                        {data.content.map(
+                            (item: mySubscribeListItem, i: number) => (
+                                <tr>
+                                    <td><img style={{ width: '300px', height: '180px' }} src={item.serviceImage} /></td>
+                                    <td>
+                                        <div>{item.serviceName}</div>
+                                        <div>
+                                            <p>구독 시작일 : <span>{item.subscribeStartDate}</span>(<span>{item.subscribePeriod}</span>일째 구독 중입니다.)</p>
+                                            
+                                            <p>선택옵션 / 가격 / 수량</p>
+                                            {item.options.map(
+                                                (option, i) => (
+                                                    <><span>{option.optionName}</span> / <span>{option.price}</span>원 / <span>{option.quantity}</span>개 <br /></>
+                                                )
+                                            )}
+                                            <p>결제 횟수 : <span>{item.paidCount}</span>회</p>
+                                            <p>다음 결제예정일 : <span>{item.nextPayDate}</span></p>
+                                        </div>
+                                    </td>
+                                    <td><Button variant="outlined" onClick={() => cancelPopupFunc(item.subscribeId)}>구독취소</Button></td>
+                                </tr>
+                            )
+                        )}
+                    </tbody>
+                </table>
+            ) : <EmptyResult />}
+            <ComModal open={cancelPopup} closeFunc={cancelPopupFunc} contents={<CancelSubscribePopup closeFunc={cancelPopupFunc} subscribeId={cancelSubsId} />} />
         </div>
     )
 }
