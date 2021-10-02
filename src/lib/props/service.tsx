@@ -18,10 +18,10 @@ export type BasicParam = {
 };
 
 export type ServiceDto = {
-  availableDay: string;
+  availableDay: SelectBoxResponse[];
   categories: SelectBoxResponse[];
   detailContents: string;
-  serviceCycle: string;
+  serviceCycle: SelectBoxResponse[];
   serviceId: number;
   serviceImages: serviceImages[];
   serviceName: string;
