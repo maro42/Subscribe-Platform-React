@@ -73,7 +73,8 @@ const storeMypageReducer = createReducer(initialState,{
     state.error = error;
     },
     [GET_SERVICE_LIST_SUCCESS]: (state, { payload }) => {
-        state.service = payload.value!;
+        console.log("redu",payload)
+        state.service = payload!;
     },
      [GET_SERVICE_LIST_FAILURE] :(state, {payload:error})=>{
         state.error = error;

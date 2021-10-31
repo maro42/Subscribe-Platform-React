@@ -9,6 +9,7 @@ import { ProductMainContainer } from './Title';
 import useInputState from '../../customHook/useInputState';
 import OptaionTable from './OptaionTable';
 import { TableHeader } from '../../../src/lib/props';
+import TextField from '@material-ui/core/TextField';
 
 const ButtonGroups = [
   {
@@ -72,25 +73,21 @@ function Options({
   const [price, handlePrice, setPrice] = useInputState('');
   const [stock, handleStock, setStock] = useInputState('');
   const [maxCount, handleMaxCount, setMaxCount] = useInputState('');
-
+  const [id, setId] = useState(0);
   const heendleAddOptions = useCallback(() => {
-    //    options.push({
-    //     optionTitle : optionTitle,
-    //     price : price,
-    //     stock : stock,
-    //     maxCount : maxCount
-    //    })
-
     setOptions([
       ...options,
       {
+        id: id,
         optionName: optionName,
         price: price,
         stock: stock,
         maxCount: maxCount,
       },
     ]);
-  }, [options, setOptions, optionName, price, stock, maxCount]);
+
+    setId(id + 1);
+  }, [options, setOptions, optionName, price, stock, maxCount, id, setId]);
 
   const handleAlignment = useCallback(
     (event: React.MouseEvent<HTMLElement>, value: string) => {
@@ -105,6 +102,10 @@ function Options({
     },
     [setDeliveryDate],
   );
+
+  const handleClickRemoveOption = (id: number) => {
+    setOptions(options.filter((v: any) => v.id !== id));
+  };
 
   return (
     <ProductMainContainer>
@@ -139,24 +140,48 @@ function Options({
       <h1>상품 옵션을 등록해 주세요</h1>
 
       <div style={{ display: 'flex' }}>
-        상품명{' '}
-        <input
-          title="상품명"
-          onChange={handleOptionName}
-          value={optionName}
+        <TextField
+          id="standard-basic"
+          label="상품명"
+          style={{ margin: 8, width: '100%' }}
+          margin="dense"
+          inputProps={{ onChange: handleOptionName }}
         />
-        가격 <input title="가격" onChange={handlePrice} value={price} />
-        재고 <input title="재고" onChange={handleStock} value={stock} />
-        최대 주문가능 수량{' '}
-        <input
-          title="최대주문가능수량"
-          onChange={handleMaxCount}
-          value={maxCount}
+        <TextField
+          id="standard-basic"
+          label="가격"
+          style={{ margin: 8, width: '100%' }}
+          margin="dense"
+          inputProps={{ onChange: handlePrice }}
+          type="number"
+        />
+        <TextField
+          id="standard-basic"
+          label="재고"
+          style={{ margin: 8, width: '100%' }}
+          margin="dense"
+          inputProps={{ onChange: handleStock }}
+          type="number"
+        />
+        <TextField
+          id="standard-basic"
+          label="최대 주문 가능 수량"
+          style={{ margin: 8, width: '100%' }}
+          margin="dense"
+          inputProps={{ onChange: handleMaxCount }}
+          type="number"
         />
         <Button onClick={heendleAddOptions}>추가</Button>
       </div>
 
-      {<CustomTable headers={OptaionTableHeader} content={options} />}
+      {
+        <CustomTable
+          headers={OptaionTableHeader}
+          content={options}
+          removable
+          onClickRemove={handleClickRemoveOption}
+        />
+      }
     </ProductMainContainer>
   );
 }

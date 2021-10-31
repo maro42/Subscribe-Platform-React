@@ -1,6 +1,7 @@
 import { all } from 'redux-saga/effects';
 import testSaga from './test';
 import * as authSaga from './auth';
+import * as serviceSaga from './servciec';
 import * as storeMypageSaga from './store/mypage';
 
 export default function* rootSaga() {
@@ -13,5 +14,6 @@ export default function* rootSaga() {
     storeMypageSaga.storeMypageSaga(),
     storeMypageSaga.savePRoductSaga(),
     storeMypageSaga.getServiceListSage(),
+    serviceSaga.savePRoductSaga(),
   ]);
 }

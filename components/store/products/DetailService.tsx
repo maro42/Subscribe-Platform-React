@@ -9,6 +9,12 @@ import { SelectBoxResponse, TableHeader } from '../../../src/lib/props';
 import { Button } from '../../../components/common';
 import TextField from '@material-ui/core/TextField';
 import MiniImages from './MiniImages';
+import * as API from '../../../src/reducers/service';
+import {
+  CreateServiceDto,
+  PickedOption,
+} from '../../../src/lib/props/subscribe';
+import { useDispatch } from 'react-redux';
 
 const questionSample: {
   headers: TableHeader[];
@@ -92,44 +98,6 @@ const reviewSample: {
   ],
 };
 
-const serviceSample: ServiceDto = {
-  serviceId: 1,
-  serviceName: '견과류 1',
-  serviceCycle: [{ label: 'WEEK', value: 'week' }],
-  availableDay: [
-    { label: '월', value: '월' },
-    { label: '화', value: '화' },
-  ],
-  detailContents: '안녕하세요',
-  serviceOptions: [
-    {
-      maxCount: 10,
-      optionName: 'Option1',
-      price: 10000,
-      stock: 500,
-    },
-    {
-      maxCount: 10,
-      optionName: 'Option2',
-      price: 20000,
-      stock: 500,
-    },
-    {
-      maxCount: 10,
-      optionName: 'Option3',
-      price: 30000,
-      stock: 500,
-    },
-  ],
-  serviceImages: [],
-  categories: [
-    {
-      value: 1,
-      label: '식품',
-    },
-  ],
-};
-
 type SelectBoxAndTitleProps = {
   values: SelectBoxResponse[];
   title: string;
@@ -154,7 +122,7 @@ function SelectBoxAndTitle({
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
-      setValue(e.target.value);
+      if (e.target.value) setValue(e.target.value);
     },
     [setValue],
   );
@@ -174,6 +142,7 @@ function SelectBoxAndTitle({
             style={{ margin: 8, width: '100%' }}
             margin="dense"
             inputProps={{ onChange: handleInputChange }}
+            type="number"
           />
         )}
       </div>
@@ -181,24 +150,62 @@ function SelectBoxAndTitle({
   );
 }
 
-function DetailService() {
-  const service: ServiceDto = serviceSample;
+type DetailServiceProps = {
+  service: ServiceDto;
+};
+
+function DetailService({ service }: DetailServiceProps) {
+  const dispatch = useDispatch();
 
   const [tabValue, setTablValue] = useState(0);
   const [cycle, setCycle] = useState('');
   const [day, setDay] = useState('');
   const [count, setCount] = useState('');
   const [option, setOption] = useState('');
+
+  const [resCount, setResCount] = useState<string[]>([]);
+  const [resOption, setResOption] = useState<string[]>([]);
+
+  const [optionList, setOptionList] = useState<string[]>([]);
+
   const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTablValue(newValue);
   };
 
   const handleClickAddCart = () => {
-    console.log(cycle, day, count, option);
+    const pickOpions: PickedOption[] = resOption.map((v, index) => {
+      const options: PickedOption = {
+        optionId: Number(v),
+        quantity: Number(resCount[index]),
+      };
+      return options;
+    });
+
+    const data: CreateServiceDto = {
+      serviceId: 1,
+      deliveryCycle: cycle,
+      deliveryDay: day,
+      options: pickOpions,
+    };
+
+    dispatch(API.saveShopping(data));
   };
 
   const handleClickBuyNow = () => {
     console.log();
+  };
+
+  const handleClickAddOption = () => {
+    setOptionList([...optionList, option + '/' + count]);
+
+    setResCount([...resCount, count]);
+    setResOption([...resOption, option]);
+  };
+
+  const handleClickRemoveOption = (id: number) => {
+    setOptionList(optionList.filter((v, i) => i !== id));
+    setResCount(resCount.filter((v, i) => i !== id));
+    setResOption(resOption.filter((v, i) => i !== id));
   };
 
   const tabContents: {
@@ -258,7 +265,24 @@ function DetailService() {
             title={'수량'}
             setValue={setCount}
           />
-
+          <OptionButtonContainer>
+            <Button onClick={handleClickAddOption}>옵션 추가</Button>
+          </OptionButtonContainer>
+          <OptionContainer>
+            <div>
+              서비스 주기 : {cycle}
+              서비스 받을 날짜 :{day}
+            </div>
+            {optionList.map((v, i) => {
+              return (
+                <OptionListStyle>
+                  <div>선택 옵션 {i + 1} </div>
+                  <div>{v}</div>
+                  <button onClick={() => handleClickRemoveOption(i)}>x</button>
+                </OptionListStyle>
+              );
+            })}
+          </OptionContainer>
           <ButtonContainer>
             <ButtonStyle>
               <Button onClick={handleClickAddCart}>장바구니</Button>
@@ -316,9 +340,26 @@ const SelectBoxContainer = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  margin: 70px;
 `;
+
+const OptionButtonContainer = styled.div`
+  display: flex;
+  margin-top: 20px;
+`;
+
 const ButtonStyle = styled.div`
   margin-left: 30px;
   margin-right: 30px;
+`;
+
+const OptionContainer = styled.div`
+  background-color: #cdcdcd;
+  width: 500px;
+  height: 100px;
+  overflow: auto;
+`;
+
+const OptionListStyle = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;

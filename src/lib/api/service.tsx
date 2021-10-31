@@ -3,6 +3,7 @@ import {
   SearchByCategoryId,
   SearchByServiceName,
 } from '../props/service';
+import { CreateServiceDto } from '../props/subscribe';
 import client from './client';
 
 export const getServicesByServiceName = (
@@ -40,3 +41,10 @@ export const getNewServices = (param: BasicParam) =>
       },
     })
     .then((response) => response.data);
+
+export const getServiceById = (serviceId: number) => {
+  client.get(`/services/${serviceId}`).then((response) => response.data);
+};
+
+export const postCreateShopping = (param: CreateServiceDto) =>
+  client.post(`/customer/shopping`, param);

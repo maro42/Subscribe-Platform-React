@@ -1,18 +1,44 @@
-import React, { useEffect } from 'react';
+import { Button } from '@material-ui/core';
+import ImageImage from 'material-ui/svg-icons/image/image';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
+const imageURLs = [
+  'images/cancel.png',
+  'images/logo.png',
+  'images/cancel.png',
+  'images/logo.png',
+];
+
 function MiniImages() {
+  const [mainImage, setMainImage] = useState(imageURLs[0]);
+
+  const handleClickMiniImage = (id: number) => {
+    setMainImage(imageURLs[id]);
+  };
+
   return (
     <>
       {' '}
       <MainImageContainer>
-        <img src={'images/cancel.png'} />
+        <img
+          style={{ padding: '10px', width: '100%', height: '100%' }}
+          src={mainImage}
+        />
       </MainImageContainer>
       <MiniImageContainer>
-        <MiniImage>miniImage1</MiniImage>
-        <MiniImage>miniImage2</MiniImage>
-        <MiniImage>miniImage3</MiniImage>
-        <MiniImage>miniImage4</MiniImage>
+        {imageURLs.map((v, i) => {
+          return (
+            <MiniImage>
+              <Button onClick={() => handleClickMiniImage(i)}>
+                <img
+                  style={{ padding: '10px', width: '100%', height: '100px' }}
+                  src={v}
+                />
+              </Button>
+            </MiniImage>
+          );
+        })}
       </MiniImageContainer>
     </>
   );
@@ -34,7 +60,7 @@ const MiniImageContainer = styled.div`
 `;
 
 const MiniImage = styled.div`
-  width: 50%;
-  height: 20%;
+  width: 25%;
+  height: 100px;
   background-color: #afafaf;
 `;

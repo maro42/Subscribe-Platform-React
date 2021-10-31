@@ -19,10 +19,17 @@ function createData(
 
 type CustomTableProps = {
   headers: TableHeader[];
-  content: { [key: string]: string }[];
+  content: { [key: string]: string | number }[];
+  removable?: boolean;
+  onClickRemove?: any;
 };
 
-export default function CustomTable({ headers, content }: CustomTableProps) {
+export default function CustomTable({
+  headers,
+  content,
+  removable,
+  onClickRemove,
+}: CustomTableProps) {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -32,6 +39,7 @@ export default function CustomTable({ headers, content }: CustomTableProps) {
               {headers.map((v, index) => {
                 return <TableCell key={index}>{v.label}</TableCell>;
               })}
+              {removable ? <TableCell>삭제</TableCell> : <></>}
             </TableRow>
           }
         </TableHead>
@@ -43,6 +51,13 @@ export default function CustomTable({ headers, content }: CustomTableProps) {
                   //TODO : align 추가
                   return <TableCell key={i}>{v[h.property]}</TableCell>;
                 })}
+                {removable ? (
+                  <TableCell>
+                    <button onClick={() => onClickRemove(v['id'])}>X</button>
+                  </TableCell>
+                ) : (
+                  <></>
+                )}
               </TableRow>
             );
           })}
