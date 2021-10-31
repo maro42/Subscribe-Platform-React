@@ -1,4 +1,5 @@
 import axios from "axios";
+import { exceptionHandler } from "../../../exception/exceptionHandler";
 
 const client = axios.create();
 
@@ -32,18 +33,14 @@ client.interceptors.response.use(
     (error) => {
 
         const status = error.response.status;
-
-        if (status === 403 || status === 401) {
-            if (error.response.data.message !== 'login fail') {   // 단순 로그인 실패는 예외
-                alert("로그인을 진행해주세요.");
-            }
-
-            // 인증실패, 토큰 만료 등 로그인 에러 시 jwt 토큰 삭제
-            window.localStorage.removeItem('Authorization');
-            return { "data": null };
-        } else {
-            return Promise.reject(error);
+        const message = error.response.data.message;
+        // 에러처리가 사실상 로그인밖에 없지만... access denied면 리덕스의 기존 데이터 다 null로 리턴
+        const result = exceptionHandler({status,message})
+        if(result !== null){
+            return result;
         }
+
+        return Promise.reject(error);
     }
 );
 

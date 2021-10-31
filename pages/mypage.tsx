@@ -1,23 +1,14 @@
-import React from "react";
-import { useEffect } from "react";
-import { useQuery } from "react-query";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Loading } from "../components/common";
-import Error from "../components/common/Error";
 import Layout from "../components/layout/Layout";
 import TabBar from "../components/mypage/TabBar";
-import { getMyInfo } from "../src/lib/api/mypage";
 
-// todo : 로그인 만료 처리
-function mypage() {
+
+function mypage(props:any) {
 
     const { loginYn } = useSelector(({ loginReducer }: any) => ({
         loginYn: loginReducer.loginYn,
     }));
-
-    const {data, isError, isLoading} = useQuery('getMyInfo', getMyInfo,{
-        refetchOnWindowFocus: false,
-    });
 
     // useEffect(() => {
     //     if (loginYn === 'N') {
@@ -26,11 +17,15 @@ function mypage() {
     //     }
     // }, [])
     return (
-        <Layout>{isLoading && <Loading/>}
+        <Layout>
         <h2>마이페이지</h2>
-        {isError || data === null || data === undefined ? <Error/> : <TabBar data={data}/>}
+        {loginYn === 'Y' && <TabBar currtab={props.currtab}/>}
         </Layout>
     );
+}
+
+export async function getServerSideProps(ctx: any) {
+  return { props: { currtab: decodeURIComponent(ctx.query.currtab) } };
 }
 
 export default mypage;

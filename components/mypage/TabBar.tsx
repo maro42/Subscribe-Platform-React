@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import Info from "./Info";
 import Subscribe from "./Subscribe";
 import Shopping from "./Shopping";
+import PaymentHistory from "./PaymentHistory";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -50,13 +51,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 
-function TabBar({data}:any) {
+function TabBar({currtab}:any) {
 
     const classes = useStyles();
-    const [value, setValue] = React.useState('info');
+    const [value, setValue] = useState(currtab);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-        setValue(newValue);
+        // setValue(newValue);
+        window.location.replace('/mypage?currtab='+newValue);
     };
 
     return (
@@ -73,16 +75,20 @@ function TabBar({data}:any) {
                     />
                     <Tab value="subscribe" label="내 구독" {...a11yProps('subscribe')} />
                     <Tab value="shopping" label="장바구니" {...a11yProps('shopping')} />
+                    <Tab value="payhis" label="결제 이력" {...a11yProps('payhis')} />
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index="info">
-                <Info data={data}/>
+                <Info/>
             </TabPanel>
             <TabPanel value={value} index="subscribe">
-                <Subscribe />
+                <Subscribe/>
             </TabPanel>
             <TabPanel value={value} index="shopping">
                 <Shopping />
+            </TabPanel>
+            <TabPanel value={value} index="payhis">
+                <PaymentHistory />
             </TabPanel>
         </div>
     )

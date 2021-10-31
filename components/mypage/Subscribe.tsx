@@ -7,10 +7,11 @@ import { mySubscribeListItem } from "../../src/lib/props/subscribe";
 import { Loading } from "../common";
 import ComModal from "../common/ComModal";
 import EmptyResult from "../common/EmptyResult";
+import Error from "../common/Error";
 import CancelSubscribePopup from "./CancelSubscribePopup";
 
 // todo : 디폴트 이미지 처리
-function Subscribe() {
+function Subscribe(changeTab:any) {
 
     // 구독 취소 팝업
     const [cancelPopup, setCancelPopup] = useState(false);
@@ -31,7 +32,7 @@ function Subscribe() {
     return (
         <div>
             {isLoading && <Loading />}
-            {isError && <div>오류가 발생했습니다.</div>}
+            {isError && <Error/>}
             {data !== undefined && data && data.totCnt !== 0 ? (
                 <table>
                     <colgroup>
@@ -66,7 +67,7 @@ function Subscribe() {
                     </tbody>
                 </table>
             ) : <EmptyResult />}
-            <ComModal open={cancelPopup} closeFunc={cancelPopupFunc} contents={<CancelSubscribePopup closeFunc={cancelPopupFunc} subscribeId={cancelSubsId} />} />
+            <ComModal open={cancelPopup} closeFunc={cancelPopupFunc} contents={<CancelSubscribePopup closeFunc={cancelPopupFunc} subscribeId={cancelSubsId} changeTab={changeTab} />} />
         </div>
     )
 }
