@@ -13,7 +13,7 @@ export type mySubscribeListItem = {
 
 export type subsOption = {
   optionName: string;
-  price: NumberConstructor;
+  price: number;
   quantity: number;
 };
 
@@ -23,14 +23,31 @@ export type cancelInfo = {
   cancelReasonEtc: string;
 };
 
-export type CreateServiceDto = {
-  serviceId: number;
+export type shoppingInfo = {
+  subscribeId: number;
+  serviceName: string;
+  serviceImage: string;
+  options: [subsOption];
   deliveryCycle: string;
   deliveryDay: string;
-  options: PickedOption[];
 };
 
-export type PickedOption = {
-  optionId: number;
-  quantity: number;
+export type reqPayInfo = {
+  subscribeIds: [number];
+  creditCardCompany: string;
+  cardNo: string;
+};
+
+export type paymentResultParam = {
+  startDate: string;
+  endDate: string;
+  serviceName: string;
+};
+
+export type resPaymentResult = {
+  serviceNames: [string];
+  creditCardCompany: string;
+  paidCardNo: string;
+  payPrice: number;
+  payDate: string;
 };

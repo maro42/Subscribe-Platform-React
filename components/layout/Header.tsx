@@ -52,7 +52,8 @@ export default function Header() {
 
     const goMypage = () => {
         Router.push({
-            pathname: "/mypage"
+            pathname: "/mypage",
+            query: "currtab=info"
         })
     }
 

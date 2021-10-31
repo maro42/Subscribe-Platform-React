@@ -9,7 +9,8 @@ import { cancelSubscribe } from "../../src/lib/api/mypage";
 
 type paramType = {
     closeFunc: any,
-    subscribeId: number
+    subscribeId: number,
+    changeTab: any
 }
 
 function CancelSubscribePopup({ closeFunc, subscribeId }: paramType) {
@@ -34,7 +35,8 @@ function CancelSubscribePopup({ closeFunc, subscribeId }: paramType) {
                     alert("취소되었습니다.");
                 })
                 .catch(err => { alert("오류가 발생했습니다."); console.log(err) });
-            closeFunc;
+            closeFunc();
+            window.location.replace('/mypage?currtab=subscribe');
         }
     }
 
