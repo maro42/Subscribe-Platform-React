@@ -34,14 +34,14 @@ export default function CustomImageListItem({
   src,
   title,
   subTitle,
-  // rowHeight,
-  // width,
-}: CustomImageListItemType) {
+}: // rowHeight,
+// width,
+CustomImageListItemType) {
   const classes = useStyles();
 
   return (
-    <ImageListItem key={src}>
-      <img src={src} alt={'test'} />
+    <ImageListItem key={src} style={{ width: 500 }}>
+      <img src={'/images/cancel.png'} alt={'test'} style={{ width: 300 }} />
       <ImageListItemBar title={title} subtitle={<span>{subTitle}</span>} />
     </ImageListItem>
   );

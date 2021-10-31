@@ -116,6 +116,7 @@ function Product() {
   const [deliveryDate, setDeliveryDate] = useState('');
   const [options, setOptions] = useState<
     {
+      id: number;
       optionName: string;
       price: string;
       stock: string;
@@ -256,11 +257,11 @@ function Product() {
 
     formData.append('categories[0].categoryId', category);
 
-    thumbNails.forEach((v, index) => {
-      formData.append(`serviceImages[${index}].imageFile`, v);
-      formData.append(`serviceImages[${index}].imageType`, 'THUMBNAIL');
-      formData.append(`serviceImages[${index}].imageSeq`, String(index));
-    });
+    // thumbNails.forEach((v, index) => {
+    //   formData.append(`serviceImages[${index}].imageFile`, v);
+    //   formData.append(`serviceImages[${index}].imageType`, 'THUMBNAIL');
+    //   formData.append(`serviceImages[${index}].imageSeq`, String(index));
+    // });
 
     // formData.append("serviceImages", serviceImages);
     // const categories = [];
