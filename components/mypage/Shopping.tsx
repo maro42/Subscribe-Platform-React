@@ -1,7 +1,7 @@
 import { Button, Checkbox, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { shoppinglist, subscribe } from '../../src/lib/api/mypage';
+import { removeShopping, shoppinglist, subscribe } from '../../src/lib/api/mypage';
 import { shoppingInfo } from '../../src/lib/props/subscribe';
 import { Loading } from '../common';
 import EmptyResult from '../common/EmptyResult';
@@ -10,7 +10,8 @@ import Error from '../common/Error';
 function Shopping() {
 
     // 장바구니정보 불러오기
-    const { data, isError, isLoading } = useQuery('shoppinglist', shoppinglist, {
+    // list = { data, isError, isLoading, refetch }
+    const list = useQuery('shoppinglist', shoppinglist, {
         refetchOnWindowFocus: false
     });
 
@@ -39,7 +40,7 @@ function Shopping() {
         let price = 0;
 
         // 선택된 서비스의 옵션 가격 총 합
-        data.content.map((item: shoppingInfo, i: number) => {
+        list.data.content.map((item: shoppingInfo, i: number) => {
             if (item.subscribeId == e.target.value) {
                 item.options.map((option, i) => {
                     price += (option.price * option.quantity);
@@ -98,20 +99,33 @@ function Shopping() {
         }
     }
 
+    const currPath = window.location.pathname + window.location.search;
+    // 장바구니 목록 삭제
+    const removeItem = (subscribeId:number) => {
+        removeShopping(subscribeId)
+        .then(res => {
+            list.refetch();
+        })
+        .catch(err => {
+            alert("오류가 발생했습니다.");
+        })
+    }
+
     return (
         <div>
-            {isLoading && <Loading />}
-            {isError && <Error />}
-            {data !== undefined && data && data.totCnt !== 0 ? (
+            {list.isLoading && <Loading />}
+            {list.isError && <Error />}
+            {list.data !== undefined && list.data && list.data.totCnt !== 0 ? (
                 <>
-                    <table style={{ width: '80%' }}>
+                    <table style={{ width: '90%' }}>
                         <colgroup>
                             <col width='10%' />
-                            <col width='40%' />
-                            <col width='50%' />
+                            <col width='35%' />
+                            <col width='45%' />
+                            <col width='10%' />
                         </colgroup>
                         <tbody>
-                            {data.content.map(
+                            {list.data.content.map(
                                 (item: shoppingInfo, i: number) => (
                                     <tr>
                                         <td>
@@ -131,6 +145,7 @@ function Shopping() {
                                                 <p>배송요일/날짜 : <span>{item.deliveryDay}</span></p>
                                             </div>
                                         </td>
+                                        <td><Button onClick={() => removeItem(item.subscribeId)}>삭제</Button></td>
                                     </tr>
                                 )
                             )}

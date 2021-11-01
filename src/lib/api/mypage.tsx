@@ -19,3 +19,7 @@ export const subscribe = (subscribeInfo: reqPayInfo) => client.post('/customer/s
 export const paymentResult = (reqPaymentResult: paymentResultParam) => client.get('/payment/payment-results', {
     params: reqPaymentResult
 }).then(res => res.data);
+
+export const removeShopping = (subscribeId: number) => client.delete('/customer/remove-shopping', {
+    params: {"subscribeId":subscribeId}
+});
