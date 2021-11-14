@@ -6,7 +6,7 @@ type loginProps = {
 };
 
 // 회원가입 - 이메일 중복체크
-export const checkEmailDupl = (email:String) => client.get('/user/checkEmailDupl',{
+export const checkEmailDupl = (email:String) => client.get('/user/email-dupl',{
     params:{
         "email" : email
     }

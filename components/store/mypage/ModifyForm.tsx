@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeForm, setModifyYn } from '../../../src/reducers/store/mypage';
 import { Button } from '../../common';
 import { updateStoreinfo } from '../../../src/lib/api/store/mypage';
+import { corporationNumberCheck, emptyCheck } from '../../../src/lib/validationCheck';
 
 function ModifyForm() {
   const { storeinfo } = useSelector(({ storeMypageReducer }) => ({
@@ -18,6 +19,11 @@ function ModifyForm() {
 
   // 폼 수정
   const modifyStoreinfo = () => {
+
+    if (!validation()) {
+      return false;
+    }
+
     if (window.confirm('수정하시겠습니까?')) {
       updateStoreinfo(storeinfo.store)
         .then((res) => {
@@ -30,6 +36,23 @@ function ModifyForm() {
         });
     }
   };
+
+  // 유효성 체크
+  const validation = () => {
+    if (!emptyCheck(storeinfo.store.storeName)) {
+      alert("상호명을 입력해주세요.");
+      return false;
+    }
+
+    // 사업자번호 유효성 체크
+    if (!corporationNumberCheck(storeinfo.store.businessNum)) {
+      alert("올바른 사업자번호를 입력해주세요.");
+      return false;
+    }
+
+    return true;
+  }
+
 
   return (
     <>

@@ -10,7 +10,6 @@ import { cancelSubscribe } from "../../src/lib/api/mypage";
 type paramType = {
     closeFunc: any,
     subscribeId: number,
-    changeTab: any
 }
 
 function CancelSubscribePopup({ closeFunc, subscribeId }: paramType) {
