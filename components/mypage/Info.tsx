@@ -4,6 +4,7 @@ import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { getMyInfo, udpatePasswordInfo, updateMyInfo } from "../../src/lib/api/mypage";
+import { passwordCheck } from "../../src/lib/validationCheck";
 import { Loading } from "../common";
 import ComModal from "../common/ComModal";
 import EmptyResult from "../common/EmptyResult";
@@ -108,28 +109,11 @@ function Info() {
         })
     }
 
-    // 비밀번호 변경 전 확인사항
-    const confirmPassword = () => {
-        if (passwordInfo.changePassword.trim() === passwordInfo.confPassword.trim()) {
-            return true;
-        }
-        return false;
-    }
-
-    // 비밀번호 유요성
-    const validatePassword = () => {
-        return true;
-    }
-
     // 비밀번호 변경 함수
     const modifyPassword = () => {
 
-        if (!confirmPassword()) {
-            alert("확인 비밀번호가 일치하지 않습니다.");
-            return false;
-        }
-        if (!validatePassword) {
-            alert("비밀번호가 유효하지 않습니다. 다시 확인해주세요.");
+        // 유효성 검사
+        if(!passwordValidation()){
             return false;
         }
 
@@ -153,6 +137,20 @@ function Info() {
                     console.log(e);
                 })
         }
+    }
+
+    const passwordValidation = () => {
+
+        if(!passwordCheck(passwordInfo.changePassword)){
+            return false;
+        }
+
+        if (!(passwordInfo.changePassword.trim() === passwordInfo.confPassword.trim())) {
+            alert("변경 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+            return false;
+        }
+
+        return true;
     }
 
 
