@@ -8,6 +8,7 @@ import ServiceImage from './ServiceImage';
 import Detail from './Detail';
 import { useDispatch } from 'react-redux';
 import * as API from '../../../src/reducers/store/mypage';
+import { emptyCheck } from '../../../src/lib/validationCheck';
 
 const weekValue = {
   content: [
@@ -215,6 +216,10 @@ function Product() {
   };
 
   const handleNext = () => {
+
+    // 단계별로 유효성 검사
+    if(!validation(activeStep)) return false;
+
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -274,6 +279,86 @@ function Product() {
 
     dispatch(API.saveProduct(formData));
   };
+
+  // ========== step별 validateion check 시작 ==========
+  const validation = (step:number) => {
+
+    switch(step){
+      case 0: 
+        return checkStep0();
+      case 1:
+        return checkStep1();
+      case 2:
+        return checkStep2();
+      case 3:
+        return checkStep3();
+      case 4:
+        return checkStep4();
+      default: return true;
+
+    }
+  }
+
+  const checkStep0 = () => {
+    if(!emptyCheck(title)){
+      alert('상품명을 입력해주세요.');
+      return false;
+    }
+
+    if(!emptyCheck(category)){
+      alert('카테고리를 선택해주세요.');
+      return false;
+    }
+
+    return true;
+  }
+
+  const checkStep1 = () => {
+    if(!emptyCheck(cycle)){
+      alert("배송 주기를 선택해주세요.");
+      return false;
+    }
+
+    if(!emptyCheck(deliveryDate)){
+      alert("배송일 또는 배송요일을 선택해주세요.");
+      return false;
+    }
+
+    if(options == null || options.length <1){
+      alert("서비스 옵션(상품)은 1개 이상이어야합니다.");
+      return false;
+    }
+
+    return true;
+
+  }
+
+  const checkStep2 = () => {
+    if(thumbNails.length <1){
+      alert("서비스 이미지는 1개 이상이어야 합니다.");
+      return false;
+    }
+
+    return true;
+  }
+
+  const checkStep3 =() => {
+    if(services.length < 1){
+      alert("서비스 설명 이미지는 1개 이상이어야합니다.");
+      return false;
+    }
+
+    return true;
+  }
+
+  const checkStep4 = () => {
+    if(etc.length < 50){
+      alert("상품에 대한 설명은 50자 이상 작성해주세요.");
+      return false;
+    }
+  }
+
+  // ========== step별 validateion check 끝 ==========
 
   return (
     <ProductContainer>

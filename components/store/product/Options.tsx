@@ -10,6 +10,7 @@ import useInputState from '../../customHook/useInputState';
 import OptaionTable from './OptaionTable';
 import { TableHeader } from '../../../src/lib/props';
 import TextField from '@material-ui/core/TextField';
+import { emptyCheck } from '../../../src/lib/validationCheck';
 
 const ButtonGroups = [
   {
@@ -67,14 +68,17 @@ function Options({
 }: OptionsProps) {
   const [open, setOpen] = useState(false);
 
-  // const [options, setOptions] = useState<{[key:string] : string}[]>([]);
-
   const [optionName, handleOptionName, setOptionName] = useInputState('');
   const [price, handlePrice, setPrice] = useInputState('');
   const [stock, handleStock, setStock] = useInputState('');
   const [maxCount, handleMaxCount, setMaxCount] = useInputState('');
   const [id, setId] = useState(0);
   const heendleAddOptions = useCallback(() => {
+
+    if(!optionValidate()){
+      return false;
+    }
+
     setOptions([
       ...options,
       {
@@ -88,6 +92,25 @@ function Options({
 
     setId(id + 1);
   }, [options, setOptions, optionName, price, stock, maxCount, id, setId]);
+
+  const optionValidate = () => {
+    if(!emptyCheck(optionName)){
+      alert("서비스 옵션(상품)명을 입력해주세요.");
+      return false;
+    }
+
+    if(!emptyCheck(price)){
+      alert("가격을 입력해주세요.");
+      return false;
+    }
+
+    if(!emptyCheck(maxCount)){
+      alert("서비스 옵션(상품)명을 입력해주세요.");
+      return false;
+    }
+
+    return true;
+  }
 
   const handleAlignment = useCallback(
     (event: React.MouseEvent<HTMLElement>, value: string) => {
@@ -142,7 +165,7 @@ function Options({
       <div style={{ display: 'flex' }}>
         <TextField
           id="standard-basic"
-          label="상품명"
+          label="서비스옵션(상품)명"
           style={{ margin: 8, width: '100%' }}
           margin="dense"
           inputProps={{ onChange: handleOptionName }}
