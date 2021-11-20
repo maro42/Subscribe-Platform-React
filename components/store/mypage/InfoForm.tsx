@@ -26,10 +26,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function InfoForm() {
-
   // 리덕스에서 가져온 storeinfo
   const { storeinfo, error, storeinfoLoading } = useSelector(
-    ({ storeMypageReducer, loading }:any) => ({
+    ({ storeMypageReducer, loading }: any) => ({
       storeinfo: storeMypageReducer.storeinfo,
       error: storeMypageReducer.error,
       storeinfoLoading: loading['store/mypage/GET_STOREINFO'],
@@ -40,7 +39,7 @@ function InfoForm() {
   // 수정 폼으로 이동
   const goModify = () => {
     dispatch(setModifyYn('Y'));
-  }
+  };
 
   const classes = useStyles();
 
@@ -101,7 +100,7 @@ function InfoForm() {
         </React.Fragment>
       )}
 
-      {storeinfoLoading ? <Loading/> : null}
+      {storeinfoLoading ? <Loading /> : null}
     </div>
   );
 }

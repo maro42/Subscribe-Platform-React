@@ -206,10 +206,6 @@ function Product() {
     ],
   );
 
-  const isStepOptional = (step: number) => {
-    return step === 1;
-  };
-
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
   };
@@ -227,10 +223,6 @@ function Product() {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
   };
 
   const dispatch = useDispatch();
@@ -257,22 +249,24 @@ function Product() {
 
     formData.append('categories[0].categoryId', category);
 
-    // thumbNails.forEach((v, index) => {
-    //   formData.append(`serviceImages[${index}].imageFile`, v);
-    //   formData.append(`serviceImages[${index}].imageType`, 'THUMBNAIL');
-    //   formData.append(`serviceImages[${index}].imageSeq`, String(index));
-    // });
+    thumbNails.forEach((v, index) => {
+      formData.append(`serviceImages[${index}].imageFile`, v, 'file.jpg');
+      formData.append(`serviceImages[${index}].imageType`, 'THUMBNAIL');
+      formData.append(`serviceImages[${index}].imageSeq`, String(index));
+    });
 
     // formData.append("serviceImages", serviceImages);
-    // const categories = [];
-    // categories.push({ categoryId: category });
+    const categories = [];
+    categories.push({ categoryId: category });
 
-    // formData.append("subCategory", subCategory);
+    formData.append('subCategory', subCategory);
 
-    // formData.append("maxCount", String(maxCount));
-    // formData.append("deliveryOption", deliveryOption);
+    formData.append('maxCount', String(maxCount));
+    formData.append('deliveryOption', deliveryOption);
 
     dispatch(API.saveProduct(formData));
+
+    window.location.replace('/store/products');
   };
 
   return (

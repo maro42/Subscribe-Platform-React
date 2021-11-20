@@ -21,10 +21,17 @@ const index = () => {
     });
   };
 
+  const goDelivery = () => {
+    Router.push({
+      pathname: '/store/delivery',
+    });
+  };
+
   return (
     <div>
       판매자 메인페이지입니다.<Button onClick={goMypage}>내정보</Button>
       <Button onClick={goUpdateProduct}>내 상품</Button>
+      <Button onClick={goDelivery}>배달정보</Button>
     </div>
   );
 };
