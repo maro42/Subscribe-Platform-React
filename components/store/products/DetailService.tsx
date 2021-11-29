@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ServiceDto } from '../../../src/lib/props/service';
 import styled from 'styled-components';
 import { SelectBox } from '../../common';
@@ -15,6 +15,7 @@ import {
   PickedOption,
 } from '../../../src/lib/props/subscribe';
 import { useDispatch } from 'react-redux';
+import { RECENT_SERVICE } from '../../../src/globalProperties';
 
 const questionSample: {
   headers: TableHeader[];
@@ -154,7 +155,33 @@ type DetailServiceProps = {
   service: ServiceDto;
 };
 
+// 최근 본 서비스 처리
+const recentService = (serviceId:number) => {
+  let recent = localStorage.getItem(RECENT_SERVICE);  //  현재 서비스가 담겨있는 로컬스토리지 저장소
+    if(recent == null){ // 기존 정보가 없으면 새로 생성
+      localStorage.setItem(RECENT_SERVICE,JSON.stringify([serviceId]));
+    }else{  // 존재하는 경우
+      let curr = JSON.parse(recent);
+
+      for(var i=0; i<curr.length; i++){
+        if(curr[i] == serviceId){ // 기존에 저장된 정보 있으면 삭제하고 다시 저장
+          curr.splice(i, 1);
+          break;
+        }
+      }
+      curr.push(serviceId);
+      localStorage.setItem(RECENT_SERVICE, JSON.stringify(curr));
+    }
+}
+
 function DetailService({ service }: DetailServiceProps) {
+
+  // 최근 본 상품 등록 처리
+  useEffect(() => {
+    recentService(service.serviceId);
+  },[])
+
+
   const dispatch = useDispatch();
 
   const [tabValue, setTablValue] = useState(0);

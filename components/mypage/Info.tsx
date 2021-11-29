@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import { TextField } from '@material-ui/core';
 import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { getMyInfo, udpatePasswordInfo, updateMyInfo } from "../../src/lib/api/mypage";
 import { passwordCheck } from "../../src/lib/validationCheck";
 import { Loading } from "../common";
@@ -64,11 +64,14 @@ function Info() {
         })
     }
 
+    
+    //const modInfo = useMutation(value => updateMyInfo(value));
 
     // 정보수정함수
     const modifyMyInfo = () => {
 
         if (window.confirm("수정하시겠습니까?")) {
+            
             const param = {
                 address: {
                     address1: updateInfo.address1,
@@ -79,6 +82,8 @@ function Info() {
                     phoneNumber: updateInfo.phone1 + updateInfo.phone2 + updateInfo.phone3
                 }
             }
+
+            // modInfo.mutate(param);
 
             // 요청
             updateMyInfo(param)
