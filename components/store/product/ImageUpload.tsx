@@ -7,6 +7,8 @@ type ImageUploadProps = {
 };
 
 function ImageUpload({ image, setImage }: ImageUploadProps) {
+  const [view, setView] = useState<string[]>([]);
+
   const handleImageUpload = (e: any) => {
     const fileArr = e.target.files;
 
@@ -21,7 +23,8 @@ function ImageUpload({ image, setImage }: ImageUploadProps) {
       let reader = new FileReader();
       reader.onload = () => {
         fileURLs[i] = reader.result?.toString();
-        setImage([...image!, fileURLs[i]]);
+        setImage([...image!, fileArr[i]]);
+        setView([...view!, fileURLs[i]]);
       };
       reader.readAsDataURL(file);
     }
@@ -40,7 +43,7 @@ function ImageUpload({ image, setImage }: ImageUploadProps) {
         />
       </div>
       <ImageContainer>
-        {image!.map((v, index) => {
+        {view!.map((v, index) => {
           return (
             <ImageBox key={index}>
               <img

@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
-import ImageImage from 'material-ui/svg-icons/image/image';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Image from 'next/image';
 
 const imageURLs = [
   'images/cancel.png',
@@ -31,10 +31,7 @@ function MiniImages() {
           return (
             <MiniImage>
               <Button onClick={() => handleClickMiniImage(i)}>
-                <img
-                  style={{ padding: '10px', width: '100%', height: '100px' }}
-                  src={v}
-                />
+                <Image src="/dist/test.jpg" width={500} height={500} />
               </Button>
             </MiniImage>
           );

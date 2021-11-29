@@ -49,29 +49,29 @@ function Service() {
     return getServiceById(serviceId);
   };
 
-  // const { data, isError, isLoading } = useQuery<ServiceDto>([
-  //   'getServiceById',
-  //   { serviceId: 1 },
-  //   detailServiceById(1),
-  //   {
-  //     refetchOnWindowFocus: false,
-  //     retry: 4, // 디폴트 : 3번
-  //     // keepPreviousData:true,
-  //   },
-  // ]);
+  const { data, isError, isLoading } = useQuery<ServiceDto>([
+    'getServiceById',
+    { serviceId: 1 },
+    detailServiceById(1),
+    {
+      refetchOnWindowFocus: false,
+      retry: 4, // 디폴트 : 3번
+      // keepPreviousData:true,
+    },
+  ]);
 
-  // console.log('>>>', data!);
-  // return (
-  //   <Layout>
-  //     {isLoading ? (
-  //       <Loading />
-  //     ) : isError ? (
-  //       <div> 오류가 발생했습니다.</div>
-  //     ) : (
-  //       <DetailService service={serviceSample!} />
-  //     )}
-  //   </Layout>
-  // );
+  console.log('>>>', data!);
+  return (
+    <Layout>
+      {isLoading ? (
+        <Loading />
+      ) : isError ? (
+        <div> 오류가 발생했습니다.</div>
+      ) : (
+        <DetailService service={serviceSample!} />
+      )}
+    </Layout>
+  );
 
   return (
     <Layout>

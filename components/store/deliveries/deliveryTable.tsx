@@ -3,7 +3,8 @@ import Table from '@material-ui/core/Table';
 import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
 import { TableCell, TableHead, TableBody, TableRow } from '@material-ui/core';
-import { TableHeader } from '../../src/lib/props';
+import { TableHeader } from '../../../src/lib/props';
+import Checkbox from '@mui/material/Checkbox';
 
 function createData(
   name: string,
@@ -17,19 +18,15 @@ function createData(
 
 //TODO : 페이지네이션 추가
 
-type CustomTableProps = {
+type DeliveryTableProps = {
   headers: TableHeader[];
   content: { [key: string]: string | number | boolean }[];
-  removable?: boolean;
-  onClickRemove?: any;
 };
 
-export default function CustomTable({
+export default function DeliveryTable({
   headers,
   content,
-  removable,
-  onClickRemove,
-}: CustomTableProps) {
+}: DeliveryTableProps) {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -39,7 +36,6 @@ export default function CustomTable({
               {headers.map((v, index) => {
                 return <TableCell key={index}>{v.label}</TableCell>;
               })}
-              {removable ? <TableCell>삭제</TableCell> : <></>}
             </TableRow>
           }
         </TableHead>
@@ -49,15 +45,17 @@ export default function CustomTable({
               <TableRow key={index}>
                 {headers.map((h, i) => {
                   //TODO : align 추가
-                  return <TableCell key={i}>{v[h.property]}</TableCell>;
+
+                  if (h.property === 'complete') {
+                    return (
+                      <TableCell key={i}>
+                        <Checkbox checked={Boolean(v[h.property]!)} />
+                      </TableCell>
+                    );
+                  } else {
+                    return <TableCell key={i}>{v[h.property]}</TableCell>;
+                  }
                 })}
-                {removable ? (
-                  <TableCell>
-                    <button onClick={() => onClickRemove(v['id'])}>X</button>
-                  </TableCell>
-                ) : (
-                  <></>
-                )}
               </TableRow>
             );
           })}
