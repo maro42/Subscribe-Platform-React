@@ -11,7 +11,7 @@ export type TableResponse<T> = {
 
 export type ListResponse<T> = {
   content: T[];
-  contentSize: number;
+  contentSize?: number;
   totCnt: number;
 };
 

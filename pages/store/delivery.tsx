@@ -1,14 +1,14 @@
-import Router from 'next/router';
-import React from 'react';
-import Button from '../../components/common/Button';
-import Delivery from '../../components/store/delivery';
+import React, { useState } from 'react';
 
-const index = () => {
+import Layout from '../../components/layout/Layout';
+import Deliveries from '../../components/store/deliveries';
+
+function Delivery() {
   return (
-    <div>
-      <Delivery />
-    </div>
+    <Layout>
+      <Deliveries />
+    </Layout>
   );
-};
+}
 
-export default index;
+export default Delivery;
