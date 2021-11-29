@@ -1,4 +1,4 @@
-import { PasswordInfo, UpdateMyinfo } from "../props/mypage";
+import { PasswordInfo, ReviewForm, UpdateMyinfo } from "../props/mypage";
 import { cancelInfo, paymentResultParam, reqPayInfo } from "../props/subscribe";
 import client from "./client";
 
@@ -19,3 +19,13 @@ export const subscribe = (subscribeInfo: reqPayInfo) => client.post('/customer/s
 export const paymentResult = (reqPaymentResult: paymentResultParam) => client.get('/payment/payment-results', {
     params: reqPaymentResult
 }).then(res => res.data);
+
+export const removeShopping = (subscribeId: number) => client.delete('/customer/remove-shopping', {
+    params: {"subscribeId":subscribeId}
+});
+
+export const writeReview = (reviewForm:ReviewForm) => client.post("/customer/review", reviewForm,{
+    headers: {
+      'Content-Type': `multipart/form-data; `,
+    },
+});

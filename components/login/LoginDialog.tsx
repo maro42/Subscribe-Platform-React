@@ -51,7 +51,7 @@ export default function LoginDialog({
             <div style={{ display: 'flex' }}>
                 <div style={{ display: 'grid', margin: '5px' }}>
                     <input name="eamil" onChange={handleEmailChange} value={email} style={{ marginBottom: "3px" }} placeholder={'이메일'} />
-                    <input name="password" onChange={handlePasswordChange} value={password} style={{ marginTop: "3px" }} placeholder={'비밀번호'} />
+                    <input type='password' name="password" onChange={handlePasswordChange} value={password} style={{ marginTop: "3px" }} placeholder={'비밀번호'} />
                 </div>
                 <Button onClick={onClickLogin} >로그인</Button>
             </div>

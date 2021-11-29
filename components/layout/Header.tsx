@@ -60,9 +60,10 @@ export default function Header() {
     // 로그아웃 처리 함수
     const logout = () => {
         localStorage.removeItem('Authorization');
-        const currPath = window.location.pathname + window.location.search;
+        // const currPath = window.location.pathname + window.location.search;
         alert("로그아웃되었습니다.");
-        window.location.replace(currPath);
+        // window.location.replace(currPath);
+        window.location.replace("/");
     }
 
     return (
