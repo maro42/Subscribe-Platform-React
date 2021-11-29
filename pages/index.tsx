@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from "next/link";
 import Router from "next/router";
 import Layout from '../components/layout/Layout';
@@ -6,6 +6,9 @@ import SearchByTitleForm from '../components/search/SearchByTitleForm';
 import CategorySelect from '../components/search/CategorySelect';
 import { Button } from '@material-ui/core';
 import router from 'next/router';
+import RecentService from '../components/main/RecentService';
+import WeeklyPopularity from '../components/main/WeeklyPopularity';
+import { RECENT_SERVICE } from '../src/globalProperties';
 
 export default function Home() {
 
@@ -30,7 +33,11 @@ export default function Home() {
         <Button onClick={goTest}>테스트페이지 이동하기222</Button> */}
         <CategorySelect/>
         <Button style={{marginTop:"5px"}} onClick={searchNewServices}>새로들어온 서비스</Button>
+        <Button style={{marginTop:"5px"}} >베스트</Button>
+        <Button style={{marginTop:"5px"}} >이벤트</Button>
         <SearchByTitleForm/>
+        <WeeklyPopularity/>
+        <RecentService/>
     </Layout>
   );
 }

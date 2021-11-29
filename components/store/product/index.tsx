@@ -292,8 +292,8 @@ function Product() {
         return checkStep2();
       case 3:
         return checkStep3();
-      case 4:
-        return checkStep4();
+      // case 4:
+      //   return checkStep4();
       default: return true;
 
     }
@@ -352,10 +352,10 @@ function Product() {
   }
 
   const checkStep4 = () => {
-    if(etc.length < 50){
-      alert("상품에 대한 설명은 50자 이상 작성해주세요.");
-      return false;
-    }
+    // if(etc.length < 50){
+    //   alert("상품에 대한 설명은 50자 이상 작성해주세요.");
+    //   return false;
+    // }
   }
 
   // ========== step별 validateion check 끝 ==========
