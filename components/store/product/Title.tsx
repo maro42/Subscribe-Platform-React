@@ -103,13 +103,13 @@ function Title({
         text="1차 카테고리를 선택해 주세요"
       />
       <br />
-      <FormSelectBox
+      {/* <FormSelectBox
         values={subCategories!.content}
         value={subCategory}
         onChange={handleSubCategorySelect}
         label="2차 카테고리"
         text="2차 카테고리를 선택해 주세요"
-      />
+      /> */}
     </ProductMainContainer>
   );
 }

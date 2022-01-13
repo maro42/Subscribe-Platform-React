@@ -4,11 +4,12 @@ import { EditorState } from 'draft-js';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-function CustomEditor() {
+function CustomEditor({etc, setEtc}:any) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const onEditorStateChange = (editorState: EditorState) => {
     setEditorState(editorState);
+    setEtc(editorState);
   };
 
   return (

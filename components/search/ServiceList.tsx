@@ -2,6 +2,7 @@ import React from 'react';
 import CustomImageListItem from '../common/CustomImageListItem';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import { ImageList } from '@material-ui/core';
+import router from 'next/router';
 
 type serviceListItem = {
     'serviceId': number,
@@ -25,6 +26,14 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+// 서비스 상세정보 페이지 이동
+const goServiceDetail = (serviceId:number) => {
+    router.push({
+        pathname: "/search/serviceDetail",
+        query:{id: serviceId}
+    })
+}
+
 function ServiceList(resultData: any) {
 
     const classes = useStyles();
@@ -37,7 +46,7 @@ function ServiceList(resultData: any) {
         <div className={classes.root}>
             {result && totCnt != 0 ? (
                 <ImageList>
-                    {resultList.map((item: serviceListItem) => <CustomImageListItem src={item.thumbnailImage} title={item.serviceName} subTitle={""} />)}
+                    {resultList.map((item: serviceListItem) => <div onClick={() => goServiceDetail(item.serviceId)}><CustomImageListItem src={item.thumbnailImage} title={item.serviceName} subTitle={""} /></div>)}
                 </ImageList>) : "조회결과가 없습니다."}
         </div>
     );

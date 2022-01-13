@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ProductMainContainer } from './Title';
 import dynamic from 'next/dynamic';
 import CustomEditor from '../../common/CustomEditor';
+import { Button } from '@material-ui/core';
 
 type DetailProps = {
   deliveryOption?: string;
@@ -18,9 +19,10 @@ function Detail({
   etc,
   setEtc,
 }: DetailProps) {
+
   return (
     <ProductMainContainer>
-      <CustomEditor />
+      <CustomEditor etc={etc} setEtc={setEtc}/>
     </ProductMainContainer>
   );
 }

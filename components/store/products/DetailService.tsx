@@ -16,6 +16,7 @@ import {
 } from '../../../src/lib/props/subscribe';
 import { useDispatch } from 'react-redux';
 import { RECENT_SERVICE } from '../../../src/globalProperties';
+import DetailInfo from './DetailInfo';
 
 const questionSample: {
   headers: TableHeader[];
@@ -241,11 +242,11 @@ function DetailService({ service }: DetailServiceProps) {
   }[] = [
     {
       label: '서비스 설명',
-      content: <ServiceImage />,
+      content: <ServiceImage values={service.serviceImages}/>,
     },
     {
       label: '상세 정보',
-      content: <ServiceImage />,
+      content: <DetailInfo info={service.detailContents}/>,
     },
     {
       label: '고객 후기',

@@ -42,9 +42,7 @@ export const getNewServices = (param: BasicParam) =>
     })
     .then((response) => response.data);
 
-export const getServiceById = (serviceId: number) => {
-  client.get(`/services/${serviceId}`).then((response) => response.data);
-};
+export const getServiceById = (serviceId: number) => client.get(`/services/${serviceId}`).then((response) => response.data);
 
 export const postCreateShopping = (param: CreateServiceDto) =>
   client.post(`/customer/shopping`, param);

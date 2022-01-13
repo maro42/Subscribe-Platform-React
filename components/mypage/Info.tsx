@@ -11,7 +11,6 @@ import EmptyResult from "../common/EmptyResult";
 import Error from "../common/Error";
 import PostCode from "./PostCode";
 
-// todo : 비밀번호 유효성 검사
 function Info() {
 
     const { data, isError, isLoading } = useQuery('getMyInfo', getMyInfo, {
@@ -144,6 +143,7 @@ function Info() {
         }
     }
 
+    // 비밀번호 유효성검사
     const passwordValidation = () => {
 
         if(!passwordCheck(passwordInfo.changePassword)){
